@@ -1,0 +1,66 @@
+cache:
+  paths:
+  - vendor/
+
+variables:
+  MYSQL_DATABASE: dot_app
+  MYSQL_ROOT_PASSWORD: secret
+  DB_HOST: mysql
+  DB_USERNAME: root
+
+stages:
+  - test
+  - deploy
+
+run_test:php7.1:
+  stage: test
+  image: samsulmaarif/php-laravel:7.1
+  tags:
+  - dot
+  allow_failure: false
+  services:
+    - mysql:5.7
+  script:
+    # Install Composer and project dependencies.
+    - curl -sS https://getcomposer.org/installer | php
+
+    - test -f composer.lock || rm -rf composer.lock
+  # Copy over testing configuration.
+    - cp .env.testing .env
+
+    - php composer.phar install
+
+    # Generate an application key. Re-cache.
+    - php artisan key:generate
+
+  # php artisan voyager:install --with-dummy
+
+  # Run database migrations.
+    - php artisan migrate
+
+    # Run database seeder
+    - php artisan db:seed
+
+    # create cache
+    #- php artisan optimize --force
+    #- php artisan config:cache
+    #- vendor/bin/codecept run 
+  
+  # clear cache and dump file
+    - composer dump-autoload
+    - php artisan config:clear
+    - php artisan cache:clear
+
+deploy_develop:
+  stage: deploy
+  allow_failure: false
+  image: williamyeh/ansible:centos7
+  tags:
+  - deployer
+  only: 
+    - develop
+  environment:
+    name: development
+    url: https://sandbox.dot.co.id/intern-registration
+  script:
+    - 'ansible-playbook -i deploy/hosts deploy/dev.yml'

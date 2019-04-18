@@ -1,0 +1,20 @@
+states:
+  registered:
+    transition: "review_cv"
+  review_cv:
+    transitions:
+      interview:
+        condition: "status_cv == 'approved'"
+      tolak:
+        condition: "status_cv != 'approved'"
+  interview:
+    transitions:
+      terima:
+        condition: "statusTesTeknis == 'approved'"
+      tolak:
+        condition: "statusTesTeknis != 'approved'"
+  terima:
+    end: true
+  tolak:
+    end: true
+    

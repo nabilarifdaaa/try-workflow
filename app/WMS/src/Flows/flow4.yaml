@@ -1,0 +1,19 @@
+states:
+  registered:
+    initial: true
+    action: "showStateInformation"
+    transition: review_cv
+  review_cv:
+    action: "showStateInformation"
+    transitions:
+      terima:
+        # condition: "status_cv == 'approved'"
+        condition:
+          cv_accepeted: true
+      tolak:
+        condition: "status_cv != 'approved'"
+  terima:
+    action: "sendEmailApproved"
+  tolak:
+    end: true
+    action: "sendEmailRejected"
