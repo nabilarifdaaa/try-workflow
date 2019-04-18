@@ -59,16 +59,41 @@ class CalonMagangController extends Controller
                 <a href="' . route("calonmagang.edit", ["id" => $calonmagang->id]) . '" class="btn btn-xs btn-primary btn-style-icon"><i class="fa fa-edit"></i></a>  
                 <button data-id="' . $calonmagang->id .'" onclick="deletedata(this)" class="btn btn-xs btn-danger btn-style-icon"><i class="fa fa-trash-o"></i></button>    
                  ';
-        })->rawColumns(['action'])->toJson();
+        })->addColumn('flow', function ($calonmagang) { 
+           if ($calonmagang->flow === "flow1") {
+                return '
+                    <div class="btn-group" >
+                        <button type="button" class="btn btn-outline-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            ' .$calonmagang->flow. '
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <button class="dropdown-item" data-id="' . $calonmagang->id . '"  onclick="setFlow1(this)" type="button">Flow 1</button>
+                            <button class="dropdown-item" data-id="' . $calonmagang->id . '"  onclick="setFlow2(this)" type="button">Flow 2</button>
+                        </div>
+                    </div>';
+            }  
+            elseif ($calonmagang->flow === "flow2"){
+                return
+                '<div class="btn-group" >
+                    <button type="button" class="btn btn-outline-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        ' .$calonmagang->flow. '
+                    </button>
+                   <div class="dropdown-menu dropdown-menu-right">
+                            <button class="dropdown-item" data-id="' . $calonmagang->id . '"  onclick="setFlow1(this)" type="button">Flow 1</button>
+                            <button class="dropdown-item" data-id="' . $calonmagang->id . '"  onclick="setFlow2(this)" type="button">Flow 2</button>
+                        </div>
+                </div>'  ;
+            } 
+        })->rawColumns(['action','flow'])->toJson();
     }
 
         $html = $builder->columns([
             ['data' => 'id', 'name' => 'id', 'title' => 'Id'],
             ['data' => 'nama', 'name' => 'nama', 'title' => 'nama'],
             ['data' => 'posisi.nama_posisi', 'name' => 'posisi.nama_posisi', 'title' => 'Posisi'],
-            ['data' => 'kampus', 'name' => 'kampus', 'title' => 'Kampus / Sekolah'],
             ['data' => 'tgl_awal', 'name' => 'tgl_awal', 'title' => 'Tanggal Mulai'],
             ['data' => 'tgl_akhir', 'name' => 'tgl_akhir', 'title' => 'Tanggal Akhir'],
+            ['data' => 'flow', 'name' => 'flow' , 'title' => 'flow'],
             ['data' => 'status', 'name' => 'status', 'title' => 'Status'],
             ['data' => 'action', 'name' => 'action', 'title' => 'Action'],
         ]);
@@ -111,6 +136,7 @@ class CalonMagangController extends Controller
             'tgl_akhir' => $request->tgl_akhir,
             'alasan' => $request->alasan,
             'status' => "Registered",
+            'flow' => "flow1",
             'alasan_posisi' => $request->alasan_posisi,
             'id_info' => $request->id_info,
             ]);
@@ -123,7 +149,22 @@ class CalonMagangController extends Controller
         // return 
     }
 
-    
+    public function setFlow1($id){
+        $calonmagang = CalonMagang::where('id', $id)->first();
+        $data_to_update = ['flow' => "flow1"];
+        $calonmagang->update($data_to_update);
+        dd($data_to_update);
+        return response()->json("calonmagang");
+    }
+
+    public function setFlow2($id){
+        $calonmagang = CalonMagang::where('id', $id)->first();
+        $data_to_update = ['flow' => "flow2"];
+        $calonmagang->update($data_to_update);
+
+        return response()->json("calonmagang");
+    }
+
     public function detail($id)
     {
         $calonmagang= CalonMagang::where('id',$id)->first();
@@ -165,5 +206,12 @@ class CalonMagangController extends Controller
         $calonmagang->update($data_to_update);
 
         return redirect()->route('calonmagang');
+    }
+     public function destroy($id)
+    {
+        $calonmagang = CalonMagang::where('id', $id)->first();
+        $calonmagang->delete();
+
+        return response()->json("Success");
     }
 }

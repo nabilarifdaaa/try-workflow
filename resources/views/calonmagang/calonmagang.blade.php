@@ -33,7 +33,7 @@
 
             if(confirm) {
                 $.ajax({  
-                    url: "{{ url('/calonmagang') }}" + "/" + id + "/setFalse",
+                    url: "{{ url('/calonmagang') }}" + "/" + id + "/delete",
                     type: "DELETE",
                     data: {
                         _token: "{{ csrf_token() }}",
@@ -50,13 +50,13 @@
         }
     </script>
     <script type="text/javascript">
-        function setTunggu(element){
+        function setFlow1(element){
             var id = $(element).attr("data-id");
             var confirm = window.confirm("Are you sure want to change this data?");
 
             if(confirm) {
                 $.ajax({
-                    url: "{{ url('/calonmagang')}}" + id + "/setTunggu",
+                    url: "{{ url('/calonmagang')}}"  + "/" + id + "/setFlow1",
                     type: "PUT",
                     data: {
                         _token: "{{ csrf_token() }}",
@@ -73,59 +73,13 @@
         }
     </script>
     <script type="text/javascript">
-        function setProses(element){
+        function setFlow2(element){
             var id = $(element).attr("data-id");
             var confirm = window.confirm("Are you sure want to change this data?");
 
             if(confirm) {
                 $.ajax({
-                    url: "{{ url('/calonmagang')}}" + id + "/setProses",
-                    type: "PUT",
-                    data: {
-                        _token: "{{ csrf_token() }}",
-                    },
-                    success: function(result) {
-                        window.location.href= "{{url('/calonmagang')}}";
-                    },
-                    fail: function(error) {
-                        alert("Error");
-                        console.log(error);
-                    } 
-                })
-            }
-        }
-    </script>
-    <script type="text/javascript">
-        function setTolak(element){
-            var id = $(element).attr("data-id");
-            var confirm = window.confirm("Are you sure want to change this data?");
-
-            if(confirm) {
-                $.ajax({
-                    url: "{{ url('/calonmagang')}}" + id + "/setTolak",
-                    type: "PUT",
-                    data: {
-                        _token: "{{ csrf_token() }}",
-                    },
-                    success: function(result) {
-                        window.location.href= "{{url('/calonmagang')}}";
-                    },
-                    fail: function(error) {
-                        alert("Error");
-                        console.log(error);
-                    } 
-                })
-            }
-        }
-    </script>
-    <script type="text/javascript">
-        function setTerima(element){
-            var id = $(element).attr("data-id");
-            var confirm = window.confirm("Are you sure want to change this data?");
-
-            if(confirm) {
-                $.ajax({
-                    url: "{{ url('/calonmagang')}}" + id + "/setTerima",
+                    url: "{{ url('/calonmagang')}}"  + "/" + id  + "/setFlow2",
                     type: "PUT",
                     data: {
                         _token: "{{ csrf_token() }}",

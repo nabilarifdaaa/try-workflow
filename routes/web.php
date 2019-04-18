@@ -103,13 +103,9 @@ Route::patch('/calonmagang/{id}/update', 'CalonMagangController@update')->name('
 
 Route::delete('/calonmagang/{id}/delete', 'CalonMagangController@destroy')->name('calonmagang.delete');
 
-Route::put('/calonmagang/{id}/setTunggu', 'CalonMagangController@setTunggu')->name('calonmagang.setTunggu');
+Route::put('/calonmagang/{id}/setFlow1', 'CalonMagangController@setFlow1')->name('calonmagang.setFlow1');
 
-Route::put('/calonmagang/{id}/setProses', 'CalonMagangController@setProses')->name('calonmagang.setProses');
-
-Route::put('/calonmagang/{id}/setTerima', 'CalonMagangController@setTerima')->name('calonmagang.setTerima');
-
-Route::put('/calonmagang/{id}/setTolak', 'CalonMagangController@setTolak')->name('calonmagang.setTolak');
+Route::put('/calonmagang/{id}/setFlow2', 'CalonMagangController@setFlow2')->name('calonmagang.setFlow2');
 
 Route::get('/calonmagang/create','CalonMagangController@create')->name('calonmagang.create');
 
