@@ -9,36 +9,50 @@
         </div>
     </div>
     <!-- End Page Header -->
-    <div class="col-lg-4">
-        <div class="card card-small mb-4 pt-3">
-            <div class="card-header border-bottom text-center">
-                <div class="mb-3 mx-auto">
-                    <img class="rounded-circle" src="{{ asset('/storage' .str_replace('public','',$activity->gambar)) }}" width="110"> 
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="card card-small mb-4 pt-3">
+                <div class="card-header border-bottom text-center">
+                    <div class="mb-3 mx-auto">
+                        <img class="rounded-circle" src="{{ asset('/storage' .str_replace('public','',$activity->gambar)) }}" width="110"> 
+                    </div>
+                    <h4 class="mb-0">{{$activity->title}}</h4><br>
+                    <a href="{{ url('activity') }}">
+                        <button type="button" class="mb-2 btn btn-sm btn-pill btn-outline-primary mr-2">
+                            <i class="material-icons mr-1">clear</i>Back</button>
+                    </a>
                 </div>
-                <h4 class="mb-0">{{$activity->title}}</h4><br>
-                <a href="{{ url('activity') }}">
-                    <button type="button" class="mb-2 btn btn-sm btn-pill btn-outline-primary mr-2">
-                        <i class="material-icons mr-1">clear</i>Back</button>
-                </a>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div class="card card-small mb-4">
+                <div class="card-header border-bottom">
+                <h6 class="m-0">Account Details</h6>
+                </div>
+                <ul class="list-group list-group-flush">
+                <li class="list-group-item p-3">
+                    <div class="row">
+                    <div class="col">
+                        <form action="{{route('activity.update', $activity->id)}}" enctype="multipart/form-data" method="POST">
+                            {{method_field('PATCH')}}
+                            @csrf
+                            <div class="form-group">
+                                <label for="title">Nama</label>
+                                <input class="form-control" value="{{$activity->title}}" type="text" name="title" placeholder="Nama">
+                            </div>
+                            <div class="form-group">
+                                <label for="title">Gambar</label><br>
+                                    <img src="{{ asset('/storage' .str_replace('public','',$activity->gambar)) }}" height="300" width="300" class="img-thumbnail">
+                                <input class="form-control"  type="file" name="gambar" placeholder="Gambar">
+                            </div>
+                            <button type="submit" class="btn btn-accent">Update</button>
+                        </form>
+                    </div>
+                    </div>
+                </li>
+                </ul>
             </div>
         </div>
     </div>
-
-{{-- <h4 class="heading-title mb-1 mt-4 text-secondary">Activity Magang</h4><br>
-  <div class="row">
-      <div class="col col-lg-12">
-          <section class="card">
-          <div class="card-header">Nama</div>
-              <div class="card-body heading-title mb-0 mt-1 text-secondary" align="center">{{$activity->title}}
-           	</div>
-          </section>
-      </div>
-  </div>
-
-  <div class="row">
-  		<div class="col col-lg-12" align="center">
-  				<img src="{{ asset('/storage' .str_replace('public','',$activity->gambar)) }}" height="300" width="300" class="img-thumbnail">
-  		</div>
-  </div><br> --}}
 @endsection
 	            
