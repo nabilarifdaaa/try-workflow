@@ -1,9 +1,13 @@
-@extends('admin')
+@extends('header')
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-12">
+        <div class="main-content-container container-fluid px-4">
+                <div class="page-header row no-gutters py-4">
+                  <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+                    <span class="text-uppercase page-subtitle">Create Activities</span>
+                  </div>
+                </div>
             <div class="card">
                 <div class="card-body">
                     <form action="{{route('activity.store')}}" enctype="multipart/form-data" method="POST">

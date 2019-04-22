@@ -9,6 +9,7 @@ use App\Activity;
 use App\CalonMagang;
 use App\InfoMagang;
 use App\Kuota;
+use App\State;
 use App\Http\Requests\CalonMagangRequest;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Storage;
@@ -118,7 +119,7 @@ class UserController extends Controller
             }
         } 
 
-        CalonMagang::create([
+        $calon = CalonMagang::create([
             'id_posisi' => $request->id_posisi,
             'kampus' => $request->kampus,
             'nama' => $request->nama,
@@ -136,6 +137,14 @@ class UserController extends Controller
             'alasan_posisi' => $request->alasan_posisi,
             'id_info' => $request->id_info,
             ]);
+        
+        $state = State::create([
+            'user_id' => $calon->id,
+            'state' => "Registered"
+        ]); 
+        
+            // dd($calon);
+            // return Response::json(array('success' => true, 'last_insert_id' => $calon->id), 200);
 
         return redirect()->route('usercalonmagang.sukses');
     }

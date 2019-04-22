@@ -1,24 +1,27 @@
-@extends('admin')
+@extends('nyoba')
 
 @section('content')
-<div class="content mt-3">
-    <div class="animated fadeIn">
-        <div class="row">
-            <div class="col-md-12">
-             <a href={{url('/activity/create')}} class="btn btn-success"><i class="fa fa-magic"></i>&nbsp; Add Data</a><br><br>
-                <div class="card">
-                    <div class="card-header">
-                        <strong class="card-title">Activity DOT</strong>
-                    </div>
-                    <div class="card-body">               
-                    {!! $html->table(['class' => 'table table-striped table-bordered'], true) !!}
-                    </div>
-                </div>
-            </div>
+<!-- Page Header -->
+<div class="page-header row no-gutters py-4">
+    <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+        <span class="text-uppercase page-subtitle">Overview</span>
+        <h3 class="page-title">Data Tables</h3>
+    </div>
+</div>
+<!-- End Page Header -->
+{{-- Start DataTables --}}
+<div class="row">
+    <div class="col">
+            <a href={{url('/activity/create')}} class="btn btn-success"><i class="fa fa-magic"></i>&nbsp; Add Data</a><br><br>
+        <div class="card card-small mb-4">
+        <div class="card-header border-bottom">
+            <h6 class="m-0">Active Users</h6>
+        </div>
+        <div class="card-body">
+            {!! $html->table(['class' => 'table table-striped table-bordered'], true) !!}
         </div>
     </div>
 </div>
-
 @endsection
 
 @push("scripts")
