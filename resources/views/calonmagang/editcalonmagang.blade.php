@@ -1,10 +1,20 @@
-@extends('admin')
+@extends('nyoba')
 
 @section('content')
 <div class="container">
+    <div class="page-header row no-gutters py-4">
+        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+            <span class="text-uppercase page-subtitle">Calon Magang</span>
+        </div>
+    </div>
+    <!-- End Page Header -->
+    {{-- <div class="row"> --}}
     <div class="row justify-content-center">
         <div class="col-md-12">
-            <div class="card">
+            <div class="card card-small mb-4">
+                <div class="card-header border-bottom">
+                    <h6 class="m-0">Edit Calon Magang</h6>
+                </div>
                 <div class="card-body">
                     <form action="{{route('calonmagang.update', $calonmagang->id)}}" enctype="multipart/form-data" method="POST">
                         {{method_field('PATCH')}}

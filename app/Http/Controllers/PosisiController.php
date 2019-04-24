@@ -22,9 +22,8 @@ class  PosisiController extends Controller
         return DataTables::of(Posisi::query())
             ->addColumn('action', function ($posisi) {
                 return 
-                '<a href="' . route("posisi.detail", ["id" => $posisi->id]) . '" class="btn btn-xs btn-info"><i class="fa fa-eye"></i></a> 
-                <a href="' . route("posisi.edit", ["id" => $posisi->id]) . '" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>  
-                <button data-id="' . $posisi->id . '" onclick="deletedata(this)" class="btn btn-xs btn-danger"><i class="fa fa-trash-o"></i></button>    
+                '<a href="' . route("posisi.detail", ["id" => $posisi->id]) . '" class="mb-2 btn btn-sm btn-info mr-1"><i class="material-icons">visibility</i></a> 
+                <button data-id="' . $posisi->id . '" onclick="deletedata(this)" class="mb-2 btn btn-sm btn-danger mr-1"><i class="material-icons">delete</i></a> </button>
                  ';
             })->addColumn('actions', function ($posisi) {
                 if ($posisi->aksi === "false") {

@@ -1,7 +1,7 @@
 @extends('nyoba')
 
 @section('content')
-<!-- Page Header -->
+    <!-- Page Header -->
     <div class="page-header row no-gutters py-4">
         <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
             <span class="text-uppercase page-subtitle">Aktivitas</span>
@@ -27,7 +27,7 @@
         <div class="col-lg-8">
             <div class="card card-small mb-4">
                 <div class="card-header border-bottom">
-                <h6 class="m-0">Account Details</h6>
+                <h6 class="m-0">Edit Aktivitas</h6>
                 </div>
                 <ul class="list-group list-group-flush">
                 <li class="list-group-item p-3">

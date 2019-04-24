@@ -6,6 +6,7 @@ use Yaml;
 
 class Parser {
     public function parseYaml(){
+        
         $yaml = Yaml::parseFile(
             __dir__. "./../Flows/flow4.yaml"
         );

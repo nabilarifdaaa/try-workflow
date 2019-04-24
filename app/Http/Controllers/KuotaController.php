@@ -18,8 +18,8 @@ class KuotaController extends Controller
         return DataTables::of(Kuota::query())
             ->addColumn('action', function ($kuota) {
                 return 
-                '<a href="' . route("kuota.edit", ["id" => $kuota->id]) . '" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>  
-                <button data-id="' . $kuota->id . '" onclick="deletedata(this)" class="btn btn-xs btn-danger"><i class="fa fa-trash-o"></i></button>    
+                '<a href="' . route("kuota.edit", ["id" => $kuota->id]) . '" class="mb-2 btn btn-sm btn-warning mr-1"><i class="material-icons">create</i></a>  
+                <button data-id="' . $kuota->id . '" onclick="deletedata(this)" class="mb-2 btn btn-sm btn-danger mr-1"><i class="material-icons">delete</i></a>  </button>
                  ';
             })->toJson();
         }

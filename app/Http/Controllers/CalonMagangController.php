@@ -55,9 +55,9 @@ class CalonMagangController extends Controller
             return DataTables::of(CalonMagang::with("posisi","infomagang"))
             ->addColumn('action', function ($calonmagang) { 
                 return  
-                '<a href="' . route("calonmagang.detail", ["id" => $calonmagang->id]) . '" class="btn btn-xs btn-info btn-style-icon"><i class="fa fa-eye"></i></a> 
-                <a href="' . route("calonmagang.edit", ["id" => $calonmagang->id]) . '" class="btn btn-xs btn-primary btn-style-icon"><i class="fa fa-edit"></i></a>  
-                <button data-id="' . $calonmagang->id .'" onclick="deletedata(this)" class="btn btn-xs btn-danger btn-style-icon"><i class="fa fa-trash-o"></i></button>    
+                '<a href="' . route("calonmagang.detail", ["id" => $calonmagang->id]) . '" class="mb-2 btn btn-sm btn-info mr-1"><i class="material-icons">visibility</i></a> 
+                <a href="' . route("calonmagang.edit", ["id" => $calonmagang->id]) . '" class="mb-2 btn btn-sm btn-warning mr-1"><i class="material-icons">create</i></a>  
+                <button data-id="' . $calonmagang->id .'" onclick="deletedata(this)" class="mb-2 btn btn-sm btn-danger mr-1"><i class="material-icons">delete</i></a> </button>
                  ';
         })->addColumn('flow', function ($calonmagang) { 
            if ($calonmagang->flow === "flow1") {
@@ -84,12 +84,15 @@ class CalonMagangController extends Controller
                         </div>
                 </div>'  ;
             } 
-        })->rawColumns(['action','flow'])->toJson();
+        })->addColumn('status', function ($calonmagang) { 
+            return  
+            '<p class="badge badge-pill badge-success">'.$calonmagang->status.'</p>';
+        })->rawColumns(['action','flow','status'])->toJson();
     }
 
         $html = $builder->columns([
             ['data' => 'id', 'name' => 'id', 'title' => 'Id'],
-            ['data' => 'nama', 'name' => 'nama', 'title' => 'nama'],
+            ['data' => 'nama', 'name' => 'nama', 'title' => 'Nama'],
             ['data' => 'posisi.nama_posisi', 'name' => 'posisi.nama_posisi', 'title' => 'Posisi'],
             ['data' => 'tgl_awal', 'name' => 'tgl_awal', 'title' => 'Tanggal Mulai'],
             ['data' => 'tgl_akhir', 'name' => 'tgl_akhir', 'title' => 'Tanggal Akhir'],

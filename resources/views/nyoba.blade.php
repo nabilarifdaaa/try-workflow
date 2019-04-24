@@ -63,13 +63,13 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link " href="{{ url('kuota') }}">
+                <a class="nav-link" href="{{ url('kuota') }}">
                   <i class="material-icons">date_range</i>
                   <span>Kuota Magang</span>
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" href="{{ url('activity') }}">
+                <a class="nav-link" href="{{ url('activity') }}">
                   <i class="material-icons">perm_media</i>
                   <span>Galeri Aktivitas</span>
                 </a>
@@ -152,8 +152,14 @@
                     <a class="dropdown-item" href="add-new-post.html">
                       <i class="material-icons">note_add</i> Add New Post</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item text-danger" href="#">
-                      <i class="material-icons text-danger">&#xE879;</i> Logout </a>
+                    <a class="dropdown-item text-danger" href="{{ route('logout') }}" 
+                      onclick="event.preventDefault();
+                        document.getElementById('logout-form').submit();">
+                      
+                      <i class="material-icons text-danger">&#xE879;</i> {{ __('Logout') }} </a>
+                      <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                          @csrf
+                      </form>
                   </div>
                 </li>
               </ul>

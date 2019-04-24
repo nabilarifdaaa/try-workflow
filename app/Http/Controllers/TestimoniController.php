@@ -24,9 +24,8 @@ class TestimoniController extends Controller
         return DataTables::of(Testimoni::with("posisi"))
         ->addColumn('action', function ($testimoni) {
             return 
-            '<a href="' . route("testimoni.detail", ["id" => $testimoni->id]) . '" class="btn btn-xs btn-info"><i class="fa fa-eye"></i></a> 
-            <a href="' . route("testimoni.detail", ["id" => $testimoni->id]) . '" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>  
-            <button data-id="' . $testimoni->id .'" onclick="deletedata(this)" class="btn btn-xs btn-danger"><i class="fa fa-trash-o"></i></button>    
+            '<a href="' . route("testimoni.detail", ["id" => $testimoni->id]) . '" class="mb-2 btn btn-sm btn-info mr-1"><i class="material-icons">visibility</i></a> 
+            <button data-id="' . $testimoni->id .'" onclick="deletedata(this)" class="mb-2 btn btn-sm btn-danger mr-1"><i class="material-icons">delete</i></a> </button>
              ';
         })->toJson();
     }

@@ -19,8 +19,8 @@ class InfoMagangController extends Controller
             return DataTables::of(InfoMagang::query())
             ->addColumn('action', function ($infomagang) {
                 return  
-                '<a href="' . route("infomagang.edit", ["id" => $infomagang->id]) . '" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>  
-                <button data-id="' .$infomagang->id .'" onclick="deletedata(this)" class="btn btn-xs btn-danger"><i class="fa fa-trash-o"></i></button>    
+                '<a href="' . route("infomagang.edit", ["id" => $infomagang->id]) . '" class="mb-2 btn btn-sm btn-warning mr-1"><i class="material-icons">create</i></a>  
+                <button data-id="' .$infomagang->id .'" onclick="deletedata(this)" class="mb-2 btn btn-sm btn-danger mr-1"><i class="material-icons">delete</i></a> </button>    
                  ';
             })->toJson();
         }

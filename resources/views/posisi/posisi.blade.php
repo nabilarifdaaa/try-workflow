@@ -1,37 +1,38 @@
-@extends('admin')
+@extends('nyoba')
 
 @section('content')
-    <div class="content mt-3">
-        <div class="animated fadeIn">
-            <div class="row">
-                <div class="col-md-12">
-                     <div class="row">
-                        <div class="col col-lg-6">
-                            <div align="left">
-                                <a href="{{url('/posisi/create')}}" class="btn btn-success"><i class="fa fa-magic"></i>&nbsp; Add Data</a><br><br>
-                            </div>
-                        </div>
-                        <div class="col-lg-6" align="right">
-                            <div class="btn-group" >
-                                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Set All Status
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <button class="dropdown-item"  onclick="setStatus(this)" type="button">Open All</button>
-                                    <button class="dropdown-item" onclick="setStatusFalse(this)" type="button">Close All</button>
-                              </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-header">
-                            <strong class="card-title">Posisi Magang</strong>
-                        </div>
-                        <div class="card-body">               
-                            {!! $html->table(['class' => 'table table-striped table-bordered'], true) !!}
-                        </div>
+    <!-- Page Header -->
+    <div class="page-header row no-gutters py-4">
+        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+            <span class="text-uppercase page-subtitle">Posisi</span>
+            <h3 class="page-title">Data Tables</h3>
+        </div>
+    </div>
+    <!-- End Page Header -->
+    <div class="row">
+        <div class="col col-lg-6">
+                <div align="left">
+                    <a href="{{url('/posisi/create')}}" class="btn btn-success"><i class="fa fa-magic"></i>&nbsp; Add Data</a><br><br>
+                </div>
+            </div>
+            <div class="col-lg-6" align="right">
+                <div class="btn-group" >
+                    <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Set All Status
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <button class="dropdown-item"  onclick="setStatus(this)" type="button">Open All</button>
+                        <button class="dropdown-item" onclick="setStatusFalse(this)" type="button">Close All</button>
                     </div>
                 </div>
+            </div>
+        </div>  
+        <div class="card card-small mb-4">
+            <div class="card-header border-bottom">
+                <h6 class="m-0">Posisi Magang </h6>
+            </div>
+            <div class="card-body">   
+                {!! $html->table(['class' => 'table table-striped table-bordered'], true) !!}
             </div>
         </div>
     </div>

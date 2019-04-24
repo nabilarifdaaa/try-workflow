@@ -1,27 +1,30 @@
-@extends('admin')
+@extends('nyoba')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-body">
-                    <form action="{{route('kuota.update', $kuota->id)}}" method="POST">
-                        {{method_field('PATCH')}}
-                        @csrf
-                        <div class="form-group">
-                            <label for="waktu">Waktu</label>
-                            <input class="form-control" value="{{$kuota->waktu}}" type="date" name="waktu">
-                        </div>
-                        <div class="form-group">
-                            <label for="jumlah">Jumlah</label>
-                            <input class="form-control" value="{{$kuota->jumlah}}" type="text" name="jumlah">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Update</button>
-                    </form>
-                </div>
+<div class="main-content-container container-fluid px-4">
+        <div class="page-header row no-gutters py-4">
+            <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+            <span class="text-uppercase page-subtitle">Edit Kuota</span>
             </div>
+        </div>
+    <div class="card">
+        <div class="card-body">
+            <form action="{{route('kuota.update', $kuota->id)}}" method="POST">
+                {{method_field('PATCH')}}
+                @csrf
+                <div class="form-group">
+                    <label for="waktu">Waktu</label>
+                    <input class="form-control" value="{{$kuota->waktu}}" type="date" name="waktu">
+                </div>
+                <div class="form-group">
+                    <label for="jumlah">Jumlah</label>
+                    <input class="form-control" value="{{$kuota->jumlah}}" type="text" name="jumlah">
+                </div>
+                <button type="submit" class="btn btn-primary">Update</button>
+            </form>
         </div>
     </div>
 </div>
+</div>
+
 @endsection
