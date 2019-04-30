@@ -2,6 +2,7 @@
 namespace WMS\src\Services;
 
 use WMS\src\Services\Parser;
+use Illuminate\Support\Facades\DB;
 use Yaml;
 
 class StateManager extends Parser {
@@ -12,17 +13,17 @@ class StateManager extends Parser {
         $this->yaml = $this->parseYaml();
     }
 
-    public function setUserId(){
-
+    public function setUserId($id){
+    
     }
 
     public function getStateDetail($state){
         return $this->yaml['states'][$state];
     }
 
-    public function getCurrentState(){
-
-    }
+    // public function getCurrentState($currentState){
+        // return $currentState;
+    // }
 
     public function nextState(){
 

@@ -5,10 +5,9 @@ use Illuminate\Http\Request;
 use Yaml;
 
 class Parser {
-    public function parseYaml(){
-        
+    public function parseYaml($flow){
         $yaml = Yaml::parseFile(
-            __dir__. "./../Flows/flow4.yaml"
+            __dir__. "./../Flows/".$flow .".yaml"
         );
         return $yaml;
     }

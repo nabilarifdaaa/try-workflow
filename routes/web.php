@@ -11,6 +11,7 @@
 |
 */
 Route::get('/flow4','CalonMagangController@getAll');
+Route::get('/det/{id}/detail','CalonMagangController@det')->name('wms.detail');
 Route::get('/testing','CalonMagangController@state');
 
 Route::get('/admin', function () {
@@ -106,6 +107,10 @@ Route::delete('/calonmagang/{id}/delete', 'CalonMagangController@destroy')->name
 Route::put('/calonmagang/{id}/setFlow1', 'CalonMagangController@setFlow1')->name('calonmagang.setFlow1');
 
 Route::put('/calonmagang/{id}/setFlow2', 'CalonMagangController@setFlow2')->name('calonmagang.setFlow2');
+
+Route::put('/calonmagang/{id}/setFlow3', 'CalonMagangController@setFlow3')->name('calonmagang.setFlow3');
+
+Route::put('/calonmagang/{id}/setFlow4', 'CalonMagangController@setFlow4')->name('calonmagang.setFlow4');
 
 Route::get('/calonmagang/create','CalonMagangController@create')->name('calonmagang.create');
 

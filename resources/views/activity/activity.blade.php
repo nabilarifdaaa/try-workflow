@@ -15,7 +15,7 @@
             <a href={{url('/activity/create')}} class="btn btn-success"><i class="fa fa-magic"></i>&nbsp; Add Data</a><br><br>
             <div class="card card-small mb-4">
                 <div class="card-header border-bottom">
-                    <h6 class="m-0">Active Users</h6>
+                    <h6 class="m-0">Galeri Aktifitas</h6>
                 </div>
                 <div class="card-body">
                     {!! $html->table(['class' => 'table table-striped table-bordered'], true) !!}

@@ -6,7 +6,7 @@ states:
       interview:
         condition: "status_cv == 'approved'"
       tolak:
-        condition: "status_cv != 'approved'"
+        condition: "status_cv == 'rejected'"
   interview:
     transitions:
       terima:

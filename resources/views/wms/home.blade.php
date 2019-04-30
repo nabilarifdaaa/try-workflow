@@ -1,4 +1,4 @@
-@extends('header')
+@extends('nyoba')
 
 @section('content')
           <!-- / .main-navbar -->
