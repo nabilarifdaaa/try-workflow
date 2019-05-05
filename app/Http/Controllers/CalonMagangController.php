@@ -35,15 +35,19 @@ class CalonMagangController extends Controller
             ->select('calon_magangs.id','calon_magangs.flow', 'states.state')
             ->where('calon_magangs.id','=',$id)
             ->first();
-         
 
         $getFlow = $user->flow;
         $currentState = $user->state;
-        
+
         // Kasih Flow
         $flowClasses = new Parser();
         $flow = $flowClasses->parseYaml($getFlow);
-        // return $flow;
+        
+        $stateDetail = $flow['states'][$currentState];
+        // return $stateDetail;
+        // $stateManager = new StateManager();
+        // $stateDetail = $stateManager->getStateDetail($currentState);
+        // $user->state_detail = $stateDetail;
 
         return view('wms.detail',compact('user','flow'));
     }

@@ -18,9 +18,13 @@
                     <div class="card-body p-0">
                         <ul class="list-group list-group-small list-group-flush">
                             @foreach($flow['states'] as $key=>$value)
-                            <li class="list-group-item d-flex px-3">
-                                <span class="text-semibold text-fiord-blue">{{$key}}</span>
-                            </li>
+                                {{-- @foreach($value['transition'] as $key1=>$subvalue) --}}
+                                    {{-- @foreach($subvalue as $key2=>$subsubvalue) --}}
+                                        <li class="list-group-item d-flex px-3">
+                                            <span class="text-semibold text-fiord-blue">{{$key}}</span>
+                                        </li>
+                                    {{-- @endforeach --}}
+                                {{-- @endforeach --}}
                             @endforeach
                         </ul>
                     </div>
@@ -41,7 +45,7 @@
                                         <strong class="mr-1">Current State:</strong> 
                                         <p  class="card-post__category badge badge-pill badge-success">{{$user->state}}</p>
                                         <div class="btn-group btn-group-sm" style="margin-left: 60px;">
-                                            <button type="button" class="btn btn-white">
+                                            <button type="button" class="btn btn-white" name="status" value="approved">
                                             <span class="text-success">
                                                 <i class="material-icons">check</i>
                                             </span> Approve </button>
@@ -60,7 +64,7 @@
                             <span class="d-flex mb-2">
                                 <i class="material-icons mr-1">visibility</i>
                                 <strong class="mr-1">Detail State:</strong>
-                                <strong class="text-success">Public</strong>
+                                {{-- <strong class="text-success">{{$stateDetail}}</strong> --}}
                                 <a class="ml-auto" href="#">Edit</a>
                             </span>
                             <span class="d-flex mb-2">
