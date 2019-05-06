@@ -14,9 +14,13 @@ Route::get('/flow4','CalonMagangController@getAll');
 Route::get('/det/{id}/detail','CalonMagangController@det')->name('wms.detail');
 Route::get('/testing','CalonMagangController@state');
 
+Route::put('/condition/{id}/approved', 'CalonMagangController@approved')->name('wms.approved');
+
 Route::get('/admin', function () {
     return view('welcome');
 });
+
+Route::post('det/{id}/action', 'CalonMagangController@action')->name('wms.action');
 
 
 Route::get('/dashboard', 'HomeController@index')->name('home');

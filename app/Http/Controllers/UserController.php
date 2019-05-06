@@ -132,7 +132,7 @@ class UserController extends Controller
             'portofolio' => $request->portofolio,
             'tgl_akhir' => $request->tgl_akhir,
             'alasan' => $request->alasan,
-            'status' => "Registered",
+            // 'status' => "Registered",
             // 'status' => "Proses",
             'alasan_posisi' => $request->alasan_posisi,
             'id_info' => $request->id_info,

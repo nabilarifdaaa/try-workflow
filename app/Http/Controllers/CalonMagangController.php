@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\CalonMagang;
 use App\InfoMagang;
 use App\Posisi;
+use App\State;
 use Yajra\Datatables\Datatables;
 use Yajra\DataTables\Html\Builder;
 use App\Http\Requests\CalonMagangRequest;
@@ -17,7 +18,15 @@ use WMS\src\Services\StateManager;
 
 class CalonMagangController extends Controller
 {
-    public function __construct() {  
+    protected $userFlow,$userState,$getFlow,$currentState;
+
+    public function __construct(){
+    // public function __construct(StateManager $statemanager, $getFlow,$currentState) {
+        // $stateManager = new StateManager();
+        // $userFlow = $stateManager->getFlow($getFlow);
+        // $userState = $stateManager->getStateDetail($currentState,$getFlow);
+        // $det = $stateManager->nextState();
+        // dd($det);
         $this->middleware('auth');
     }
 
@@ -27,9 +36,9 @@ class CalonMagangController extends Controller
         return $flow;
     }
 
+
     public function det($id){
         
-        // $calonmagang= CalonMagang::where('id',$id)->first();
         $user = DB::table('calon_magangs')
             ->join('states', 'calon_magangs.id', '=', 'states.user_id')
             ->select('calon_magangs.id','calon_magangs.flow', 'states.state')
@@ -39,17 +48,41 @@ class CalonMagangController extends Controller
         $getFlow = $user->flow;
         $currentState = $user->state;
 
-        // Kasih Flow
-        $flowClasses = new Parser();
-        $flow = $flowClasses->parseYaml($getFlow);
-        
-        $stateDetail = $flow['states'][$currentState];
-        // return $stateDetail;
-        // $stateManager = new StateManager();
-        // $stateDetail = $stateManager->getStateDetail($currentState);
-        // $user->state_detail = $stateDetail;
+        $stateManager = new StateManager($getFlow);
+        $flow = $stateManager->getFlow();
+        if ($currentState === "accepted" || $currentState === "rejected" ){
+            $stateDetail = "end";
+        }
+        else{
+            $stateDetail = $stateManager->getStateDetail($currentState);
+        }
+        // dd($stateDetail);
 
-        return view('wms.detail',compact('user','flow'));
+        return view('wms.detail',compact('user','flow','stateDetail'));
+    }
+
+    public function action($id, Request $request)
+    {   
+        $stateManager = new StateManager($request->flow);
+        $stateDetail = array_keys($stateManager->getStateDetail($request->state));
+        // dd($stateDetail[0]);
+        $nextState = "";
+
+        if($request->action === "approve"){
+            $nextState = $stateDetail[0];
+        }elseif($request->action === "reject"){
+            $nextState = $stateDetail[1];
+        }
+
+        $states = State::where('user_id', $id)->first();
+        // dd($id);
+        $data_to_update = [
+            'state' => $nextState
+            ]; 
+        $states->update($data_to_update);
+
+        return redirect()->route('wms.detail', ["id" => $id]);
+        // $someName = $request->someName; 
     }
 
     public function state()

@@ -44,27 +44,42 @@
                                     <i class="material-icons mr-1">flag</i>
                                         <strong class="mr-1">Current State:</strong> 
                                         <p  class="card-post__category badge badge-pill badge-success">{{$user->state}}</p>
+                                        @if ($user->state === "accepted" || $user->state === "rejected" )
                                         <div class="btn-group btn-group-sm" style="margin-left: 60px;">
-                                            <button type="button" class="btn btn-white" name="status" value="approved">
-                                            <span class="text-success">
-                                                <i class="material-icons">check</i>
-                                            </span> Approve </button>
-                                            <button type="button" class="btn btn-white">
-                                            <span class="text-danger">
-                                                <i class="material-icons">clear</i>
-                                            </span> Reject </button>
-                                            <button type="button" class="btn btn-white">
-                                            <span class="text-light">
-                                                <i class="material-icons">more_vert</i>
-                                            </span> Edit </button>
+                                                
+                                            @else
+                                            <form action="{{route("wms.action", ["id" => $user->id])}}" method="post" onsubmit="return confirm('Are you sure approved this state?');">
+                                                {{ csrf_field() }}
+                                                <input name="id" value="{{$user->id}}" type="hidden">
+                                                <input name="flow" value="{{$user->flow}}" type="hidden">
+                                                <input name="state" value="{{$user->state}}" type="hidden">
+                                                <button type="submit" class="btn btn-white" name="action" value="approve">
+                                                    <span class="text-success">
+                                                        <i class="material-icons">check</i>
+                                                    </span> Approve 
+                                                </button>
+                                                <button type="submit" class="btn btn-white" name="action" value="reject">
+                                                    <span class="text-danger">
+                                                        <i class="material-icons">clear</i>
+                                                    </span> Reject 
+                                                </button>
+                                            </form>
+                                        @endif
                                         </div>
-                                        <div><br></div>
                                     </div>
                             </span>
                             <span class="d-flex mb-2">
                                 <i class="material-icons mr-1">visibility</i>
                                 <strong class="mr-1">Detail State:</strong>
-                                {{-- <strong class="text-success">{{$stateDetail}}</strong> --}}
+                                {{-- @foreach($stateDetail as $key=>$value)
+                                    @foreach($value as $key1=>$value2)
+                                        @foreach($value2 as $key2=>$value3)
+                                            <li class="list-group-item d-flex px-3">
+                                                <span class="text-semibold text-fiord-blue">{{$value3}}</span>
+                                            </li>
+                                        @endforeach
+                                    @endforeach
+                                @endforeach --}}
                                 <a class="ml-auto" href="#">Edit</a>
                             </span>
                             <span class="d-flex mb-2">
@@ -86,3 +101,29 @@
             </div>
     </div>
 @endsection
+
+@push("scripts")
+    <script type="text/javascript">
+        function approved(element){
+            var id = $(element).attr("data-id");
+            var confirm = window.confirm("Are you sure approved this state?");
+
+            if(confirm) {
+                $.ajax({  
+                    url: "{{ url('/condition') }}" + "/" + id + "/approved",
+                    type: "PUT",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                    },
+                    success: function(result) {
+                        window.location.href= "{{url('/wms.detail')}}";
+                    },
+                    fail: function(error) {
+                        alert("Error");
+                        console.log(error);
+                    } 
+                })
+            }
+        }
+    </script>
+@endpush
