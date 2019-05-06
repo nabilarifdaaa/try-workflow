@@ -49,6 +49,9 @@ class CalonMagangController extends Controller
         $currentState = $user->state;
 
         $stateManager = new StateManager($getFlow);
+
+        // $stateDetail = $stateManager->getStateDetail($currentState);
+        // dd($stateDetail);
         $flow = $stateManager->getFlow();
         if ($currentState === "accepted" || $currentState === "rejected" ){
             $stateDetail = "end";
@@ -63,6 +66,7 @@ class CalonMagangController extends Controller
 
     public function action($id, Request $request)
     {   
+        // dd($request->all());
         $stateManager = new StateManager($request->flow);
         $stateDetail = array_keys($stateManager->getStateDetail($request->state));
         // dd($stateDetail[0]);
@@ -76,10 +80,16 @@ class CalonMagangController extends Controller
 
         $states = State::where('user_id', $id)->first();
         // dd($id);
+        $userStatus = CalonMagang::where('id', $id)->first();
+
         $data_to_update = [
             'state' => $nextState
-            ]; 
+        ]; 
+        $data_to_update_status = [
+            'status' => $nextState
+        ]; 
         $states->update($data_to_update);
+        $userStatus->update($data_to_update_status);
 
         return redirect()->route('wms.detail', ["id" => $id]);
         // $someName = $request->someName; 
