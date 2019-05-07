@@ -14,6 +14,8 @@ Route::get('/flow4','CalonMagangController@getAll');
 Route::get('/det/{id}/detail','CalonMagangController@det')->name('wms.detail');
 Route::get('/testing','CalonMagangController@state');
 
+Route::get('/history','HistoryController@index')->name('history');
+
 Route::put('/condition/{id}/approved', 'CalonMagangController@approved')->name('wms.approved');
 
 Route::get('/admin', function () {

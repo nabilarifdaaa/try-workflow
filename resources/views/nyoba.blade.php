@@ -57,6 +57,12 @@
                 </a>
               </li>
               <li class="nav-item">
+                <a class="nav-link " href="{{ url('history') }}">
+                  <i class="material-icons">supervisor_account</i>
+                  <span>History State </span>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a class="nav-link " href="{{ url('posisi') }}">
                   <i class="material-icons">assignment</i>
                   <span>Posisi Magang</span>

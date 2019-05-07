@@ -7,6 +7,7 @@ use App\CalonMagang;
 use App\InfoMagang;
 use App\Posisi;
 use App\State;
+use App\History;
 use Yajra\Datatables\Datatables;
 use Yajra\DataTables\Html\Builder;
 use App\Http\Requests\CalonMagangRequest;
@@ -44,6 +45,13 @@ class CalonMagangController extends Controller
             ->select('calon_magangs.id','calon_magangs.flow', 'states.state')
             ->where('calon_magangs.id','=',$id)
             ->first();
+        
+        $history = DB::table('histories')
+            ->select('passed_state','status','created_at')
+            ->where('user_id','=',$id)
+            ->get();
+
+            // dd($history);
 
         $getFlow = $user->flow;
         $currentState = $user->state;
@@ -61,7 +69,7 @@ class CalonMagangController extends Controller
         }
         // dd($stateDetail);
 
-        return view('wms.detail',compact('user','flow','stateDetail'));
+        return view('wms.detail',compact('user','flow','stateDetail','history'));
     }
 
     public function action($id, Request $request)
@@ -78,6 +86,7 @@ class CalonMagangController extends Controller
             $nextState = $stateDetail[1];
         }
 
+        // UPDATE 2 TABEL
         $states = State::where('user_id', $id)->first();
         // dd($id);
         $userStatus = CalonMagang::where('id', $id)->first();
@@ -91,36 +100,18 @@ class CalonMagangController extends Controller
         $states->update($data_to_update);
         $userStatus->update($data_to_update_status);
 
+        // CREATE pd tb HISTORY
+        $history = History::create([
+            'user_id' => $id,
+            'passed_state' => $nextState,
+            'status' => $request->action
+        ]); 
+
         return redirect()->route('wms.detail', ["id" => $id]);
         // $someName = $request->someName; 
     }
 
-    public function state()
-    {
-        // $stateManager = new StateManager();
-        // $stateDetail = $stateManager->setUserId($id);
-        $stateManager = new StateManager();
-        //$users = User::latest()->paginate(5);
-        $user = DB::table('calon_magangs')
-                    ->join('states', 'calon_magangs.id', '=', 'states.user_id')
-                    ->join('posisis', 'calon_magangs.id_posisi', '=', 'posisis.id')
-                    ->select('calon_magangs.*', 'states.state', 'posisis.nama_posisi')
-                    ->get();
-        foreach($user as $users) {
-            $stateDetail = $stateManager->getStateDetail($users->state);
-            $users->state_detail = $stateDetail;
-        }
-        $state = DB::table('states')
-            ->join('calon_magangs', 'states.user_id', '=', 'calon_magangs.id')
-            ->join('posisis', 'calon_magangs.id_posisi', '=', 'posisis.id')
-            ->select('states.*','calon_magangs.nama', 'posisis.nama_posisi')
-            ->get();
-
-       
-        // dd($state);
-        return view('wms.home',compact('user','stateDetail','state'))
-            ->with('i', (request()->input('page', 1) - 1) * 5);
-    }
+   
     
     public function index(Builder $builder){  
         if (request()->ajax()) {            

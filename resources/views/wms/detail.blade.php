@@ -7,10 +7,8 @@
             <h3 class="page-title">Detail Flow</h3>
         </div>
         </div>
-        <!-- End Page Header -->
         <div class="row">
             <div class="col-lg-3 col-md-12">
-                <!-- Post Overview -->
                 <div class='card card-small mb-3'>
                     <div class="card-header border-bottom">
                         <h6 class="m-0">{{$user->flow}} - List State:</h6>
@@ -18,19 +16,15 @@
                     <div class="card-body p-0">
                         <ul class="list-group list-group-small list-group-flush">
                             @foreach($flow['states'] as $key=>$value)
-                                {{-- @foreach($value['transition'] as $key1=>$subvalue) --}}
-                                    {{-- @foreach($subvalue as $key2=>$subsubvalue) --}}
-                                        <li class="list-group-item d-flex px-3">
-                                            <span class="text-semibold text-fiord-blue">{{$key}}</span>
-                                        </li>
-                                    {{-- @endforeach --}}
-                                {{-- @endforeach --}}
+                                <li class="list-group-item d-flex px-3">
+                                    <span class="text-semibold text-fiord-blue">{{$key}}</span>
+                                </li>
                             @endforeach
                         </ul>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-5 col-md-12 col-sm-12 mb-4">
+            <div class="col-lg-3 col-md-12 ">
                 <div class="card card-small blog-comments">
                 <!-- Post Overview -->
                     <div class="card-header border-bottom">
@@ -68,38 +62,48 @@
                                         </div>
                                     </div>
                             </span>
-                            <span class="d-flex mb-2">
-                                <i class="material-icons mr-1">visibility</i>
-                                <strong class="mr-1">Detail State:</strong>
-                                {{-- @foreach($stateDetail as $key=>$value)
-                                    @foreach($value as $key1=>$value2)
-                                        @foreach($value2 as $key2=>$value3)
-                                            <li class="list-group-item d-flex px-3">
-                                                <span class="text-semibold text-fiord-blue">{{$value3}}</span>
-                                            </li>
-                                        @endforeach
-                                    @endforeach
-                                @endforeach --}}
-                                <a class="ml-auto" href="#">Edit</a>
-                            </span>
-                            <span class="d-flex mb-2">
-                                <i class="material-icons mr-1">calendar_today</i>
-                                <strong class="mr-1">Next State:</strong> Now
-                                <a class="ml-auto" href="#">Edit</a>
-                            </span>
+                            
                             
                         </li>
                         <li class="list-group-item d-flex px-3">
-                            <button class="btn btn-sm btn-outline-accent">
+                            {{-- <button class="btn btn-sm btn-outline-accent">
                             <i class="material-icons">save</i> Save Draft</button>
                             <button class="btn btn-sm btn-accent ml-auto">
-                            <i class="material-icons">file_copy</i> Publish</button>
+                            <i class="material-icons">file_copy</i> Publish</button> --}}
                         </li>
                         </ul>
                     </div>
                 </div>
             </div>
-    </div>
+            <div class="col-lg-4 ">
+                <div class="card card-small mb-4">
+                    <div class="card-header border-bottom">
+                        <h6 class="m-0">History</h6>
+                    </div>
+                    <div class="card-body p-0 pb-3 text-center">
+                        <table class="table mb-0">
+                        <thead class="bg-light">
+                            <tr>
+                            <th scope="col" class="border-0">Passed State</th>
+                            <th scope="col" class="border-0">Status</th>
+                            <th scope="col" class="border-0">Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($history as $h)
+                                <tr>
+                                    <td>{{$h->passed_state}}</td>
+                                    <td>{{$h->status}}</td>
+                                    <td>{{$h->created_at}}</td>
+                                </tr>
+                                @endforeach
+                        </tbody>
+                        </table>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
 @endsection
 
 @push("scripts")
