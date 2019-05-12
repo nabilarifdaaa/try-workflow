@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use App\Posisi;
 use App\Testimoni;
 use App\Activity;
+use App\Mail\Success;
 use App\CalonMagang;
+use Illuminate\Support\Facades\Mail;
 use App\InfoMagang;
 use App\Kuota;
 use App\State;
@@ -77,10 +79,29 @@ class UserController extends Controller
         return ($waktu->month >= $tgl_awal->month && $waktu->month <= $tgl_akhir->month);
     }
 
+    public function autoMail(Request $request)
+    {
+        $this->validate($request, [
+            'email'=>'required|distinct'
+        ]);
+        $newsletter = new CalonMagang();
+        $newsletter->email = $request->input('email');
+         if ($newsletter->save())
+        {
+            Mail::to($newsletter->email)->send(new Success($newsletter));
+            return redirect()->back()->with('alert','You have successfully applied for our Newsletter');
+        }else{
+            return redirect()->back()->withErrors($validator);
+        }
+    }
+
     public function store(Request $request) {
-        $request->validate([
-            'alasan' => 'required|min:20|string',
-            'alasan_posisi' => 'required|min:20|string',
+        \Log::info('hola');
+        // try{
+
+            $request->validate([
+            'alasan' => 'required|min:10|string',
+            'alasan_posisi' => 'required|min:10|string',
             'kampus' => 'required|string',
             'nama' => 'required|min:3|string',
             'jurusan' => 'required|string',
@@ -118,35 +139,35 @@ class UserController extends Controller
             }
         } 
 
-        $calon = CalonMagang::create([
-            'id_posisi' => $request->id_posisi,
-            'kampus' => $request->kampus,
-            'nama' => $request->nama,
-            'jurusan' => $request->jurusan,
-            'telp' => $request->telp,
-            'email' => $request->email,
-            'instagram' => $request->instagram,
-            'facebook' => $request->facebook,
-            'tgl_awal' => $request->tgl_awal,
-            'cv' =>$request->cv,
-            'portofolio' => $request->portofolio,
-            'tgl_akhir' => $request->tgl_akhir,
-            'alasan' => $request->alasan,
-            // 'status' => "Registered",
-            // 'status' => "Proses",
-            'alasan_posisi' => $request->alasan_posisi,
-            'id_info' => $request->id_info,
-            ]);
-        
-        $state = State::create([
+        $request["status"] = "Registered";
+        $calon = CalonMagang::create($request->except("_token"));
+        State::create([
             'user_id' => $calon->id,
             'state' => "Registered"
         ]); 
         
-            // dd($calon);
-            // return Response::json(array('success' => true, 'last_insert_id' => $calon->id), 200);
 
-        return redirect()->route('usercalonmagang.sukses');
+       //  $newsletter = new CalonMagang();
+       //  $newsletter->email = $request->input('email');
+       // // dd($newsletter->email);
+
+        
+            Mail::send('email.success', ['email' => $request->email], function ($message) use ($calon)
+            {
+                $message->from('revinaaniver@gmail.com', 'Goodness Kayode');
+                $message->to($calon->email);
+            });
+            //return redirect()->back()->with('alert','You have successfully applied for our Newsletter');
+       
+        
+        
+        // return redirect()->route('usercalonmagang.sukses');
+        // } catch(\Exception $exception)
+        // {
+        //     dd($exception);
+        // }
+
+
     }
     
 
