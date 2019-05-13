@@ -87,6 +87,7 @@
                             <th scope="col" class="border-0">Passed State</th>
                             <th scope="col" class="border-0">Status</th>
                             <th scope="col" class="border-0">Time</th>
+                            <th scope="col" class="border-0">Admin</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -95,6 +96,7 @@
                                     <td>{{$h->passed_state}}</td>
                                     <td>{{$h->status}}</td>
                                     <td>{{$h->created_at}}</td>
+                                  
                                 </tr>
                                 @endforeach
                         </tbody>

@@ -14,6 +14,7 @@ use App\Http\Requests\CalonMagangRequest;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use WMS\src\Services\Parser;
 use WMS\src\Services\StateManager;
 
@@ -39,7 +40,7 @@ class CalonMagangController extends Controller
 
 
     public function det($id){
-        
+       
         $user = DB::table('calon_magangs')
             ->join('states', 'calon_magangs.id', '=', 'states.user_id')
             ->select('calon_magangs.id','calon_magangs.flow', 'states.state')
@@ -100,11 +101,16 @@ class CalonMagangController extends Controller
         $states->update($data_to_update);
         $userStatus->update($data_to_update_status);
 
+
+
         // CREATE pd tb HISTORY
+        $admin=Auth::user()->id;
+        dd($admin);
         $history = History::create([
             'user_id' => $id,
             'passed_state' => $nextState,
-            'status' => $request->action
+            'status' => $request->action,
+            'admin' => $admin
         ]); 
 
         return redirect()->route('wms.detail', ["id" => $id]);
@@ -255,7 +261,7 @@ class CalonMagangController extends Controller
     }
 
    
-    public function update(CalonMagangRequest $request, $id)
+    public function update(Request $request, $id)
     {
         $calonmagang = CalonMagang::where('id', $id)->first();
         $data_to_update = [
@@ -268,12 +274,12 @@ class CalonMagangController extends Controller
             'instagram' => $request->instagram,
             'facebook' => $request->facebook,
             'tgl_awal' => $request->tgl_awal,
+            'tgl_akhir' => $request->tgl_akhir,
             'cv' =>$request->cv,
             'portofolio' => $request->portofolio,
-            'tgl_akhir' => $request->tgl_akhir,
             'alasan' => $request->alasan,
+            'alasan_posisi' => $request->alasan_posisi,
             'id_info' => request('info'),
-            'status' => $request->status,
             ]; 
         $calonmagang->update($data_to_update);
 
