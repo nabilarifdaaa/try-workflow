@@ -96,7 +96,7 @@
                                     <td>{{$h->passed_state}}</td>
                                     <td>{{$h->status}}</td>
                                     <td>{{$h->created_at}}</td>
-                                  
+                                    <td>{{$h->name}}</td>
                                 </tr>
                                 @endforeach
                         </tbody>

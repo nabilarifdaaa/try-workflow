@@ -10,6 +10,15 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('newsletter',[
+    'uses'=>'EmailController@create',
+    'as'=>'newsletter'
+]);
+Route::post('apply-two',[
+    'uses'=>'EmailController@autoMail',
+    'as'=>'apply-two'
+]);
+
 Route::get('/flow4','CalonMagangController@getAll');
 Route::get('/det/{id}/detail','CalonMagangController@det')->name('wms.detail');
 Route::get('/testing','CalonMagangController@state');
@@ -158,3 +167,7 @@ Route::post('register/create','UserController@store')->name('register.store');
 
 Route::get('usercalonmagang/success', 'UserController@sukses')->name('usercalonmagang.sukses');
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

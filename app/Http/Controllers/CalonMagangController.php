@@ -48,12 +48,11 @@ class CalonMagangController extends Controller
             ->first();
         
         $history = DB::table('histories')
-            ->select('passed_state','status','created_at')
-            ->where('user_id','=',$id)
+        ->join('users', 'histories.id_admin','=','users.id')
+            ->select('histories.passed_state','histories.status','users.name','histories.created_at')
+            ->where('histories.user_id','=',$id)
             ->get();
-
             // dd($history);
-
         $getFlow = $user->flow;
         $currentState = $user->state;
 
@@ -105,13 +104,14 @@ class CalonMagangController extends Controller
 
         // CREATE pd tb HISTORY
         $admin=Auth::user()->id;
-        dd($admin);
+        //dd($admin);
         $history = History::create([
             'user_id' => $id,
             'passed_state' => $nextState,
             'status' => $request->action,
-            'admin' => $admin
+            'id_admin' => $admin
         ]); 
+        // dd($history->id_admin);
 
         return redirect()->route('wms.detail', ["id" => $id]);
         // $someName = $request->someName; 
