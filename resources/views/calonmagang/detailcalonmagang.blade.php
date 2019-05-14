@@ -98,7 +98,7 @@
                     <div class="text-center">
                         <a href="{{ url('calonmagang') }}">
                             <button type="button" class="mb-2 btn btn-sm btn-pill btn-outline-primary mr-2">
-                                <i class="material-icons mr-1">clear</i>Kembali</button>
+                                <i class="material-icons mr-1">clear</i>Back</button>
                         </a>
                     </div>
                     </form>

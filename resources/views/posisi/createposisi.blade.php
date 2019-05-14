@@ -3,11 +3,11 @@
 @section('content')
 <div class="container">
     <div class="main-content-container container-fluid px-4">
-            <div class="page-header row no-gutters py-4">
-                <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
-                <span class="text-uppercase page-subtitle">Tambah Posisi</span>
-                </div>
+        <div class="page-header row no-gutters py-4">
+            <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+            <span class="text-uppercase page-subtitle">Tambah Posisi</span>
             </div>
+        </div>
         <div class="card">
             <div class="card-body">
                 <form action="{{route('posisi.store')}}" enctype="multipart/form-data" method="POST">
@@ -33,8 +33,11 @@
                                     <label>Tidak</label>
                             </p>      
                     </div>
-                    <button type="submit" class="btn btn-primary">Create</button>
+                    <button type="submit" class="btn btn-success">Create</button>
                 </form>
+                <a href="{{ url('posisi') }}">
+                    <button type="submit" class="btn btn-primary" style="margin-top: 10px; padding: 9px 21px 9px 20px">Back</button>
+                </a>
             </div>
         </div>
     </div>

@@ -20,8 +20,11 @@
                         <label for="title">Gambar</label>
                         <input class="form-control" type="file" name="gambar" placeholder="Gambar">
                     </div>
-                    <button type="submit" class="btn btn-primary">Create</button>
+                    <button type="submit" class="btn btn-success">Create</button>
                 </form>
+                <a href="{{ url('activity') }}">
+                    <button type="submit" class="btn btn-primary" style="margin-top: 10px; padding: 9px 21px 9px 20px">Back</button>
+                </a>
             </div>
         </div>
     </div>

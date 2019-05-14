@@ -20,7 +20,10 @@
                     <label for="jumlah">Jumlah</label>
                     <input class="form-control" value="{{$kuota->jumlah}}" type="text" name="jumlah">
                 </div>
-                <button type="submit" class="btn btn-primary">Update</button>
+                <button type="submit" class="btn btn-warning">Update</button>
+                <a href="{{ url('kuota') }}">
+                    <button type="submit" class="btn btn-primary">Back</button>
+                </a>
             </form>
         </div>
     </div>

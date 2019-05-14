@@ -17,7 +17,10 @@
                         <label for="nama_infomagang">Info</label>
                         <input class="form-control" value="{{$infomagang->info}}" type="text" name="info">
                     </div>
-                    <button type="submit" class="btn btn-primary">Update</button>
+                    <button type="submit" class="btn btn-warning">Update</button>
+                    <a href="{{ url('infomagang') }}">
+                        <button type="submit" class="btn btn-primary" >Back</button>
+                    </a>
                 </form>
             </div>
         </div>

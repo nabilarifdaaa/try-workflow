@@ -43,12 +43,13 @@ class CalonMagangController extends Controller
        
         $user = DB::table('calon_magangs')
             ->join('states', 'calon_magangs.id', '=', 'states.user_id')
-            ->select('calon_magangs.id','calon_magangs.flow', 'states.state')
+            ->join('posisis', 'calon_magangs.id_posisi','=','posisis.id')
+            ->select('calon_magangs.*', 'states.state','posisis.nama_posisi')
             ->where('calon_magangs.id','=',$id)
             ->first();
         
         $history = DB::table('histories')
-        ->join('users', 'histories.id_admin','=','users.id')
+            ->join('users', 'histories.id_admin','=','users.id')
             ->select('histories.passed_state','histories.status','users.name','histories.created_at')
             ->where('histories.user_id','=',$id)
             ->get();
@@ -127,7 +128,7 @@ class CalonMagangController extends Controller
                 '<a href="' . route("calonmagang.detail", ["id" => $calonmagang->id]) . '" class="mb-2 btn btn-sm btn-info mr-1"><i class="material-icons">visibility</i></a> 
                 <a href="' . route("calonmagang.edit", ["id" => $calonmagang->id]) . '" class="mb-2 btn btn-sm btn-warning mr-1"><i class="material-icons">create</i></a>  
                 <button data-id="' . $calonmagang->id .'" onclick="deletedata(this)" class="mb-2 btn btn-sm btn-danger mr-1"><i class="material-icons">delete</i></a> </button>
-                <a href="' . route("wms.detail", ["id" => $calonmagang->id]) . '" class="mb-2 btn btn-sm btn-secondary mr-1"><i class="material-icons">waves</i></a>  
+                <a href="' . route("wms.detail", ["id" => $calonmagang->id]) . '" class="mb-2 btn btn-sm btn-secondary mr-1"><i class="material-icons">settings</i></a>  
                  ';
         })->addColumn('flow', function ($calonmagang) { 
                 return '

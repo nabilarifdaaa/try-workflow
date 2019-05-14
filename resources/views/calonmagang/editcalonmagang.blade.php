@@ -95,7 +95,10 @@
                                 @endforeach
                             </select>
                         </div>                     
-                        <button type="submit" class="btn btn-primary">Update</button>
+                        <button type="submit" class="btn btn-success">Update</button>
+                        <a href="{{ url('calonmagang') }}">
+                            <button type="submit" class="btn btn-primary">Back</button>
+                        </a>
                     </form>
                 </div>
             </div>

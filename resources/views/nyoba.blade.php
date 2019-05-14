@@ -57,12 +57,6 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link " href="{{ url('history') }}">
-                  <i class="material-icons">supervisor_account</i>
-                  <span>History State </span>
-                </a>
-              </li>
-              <li class="nav-item">
                 <a class="nav-link " href="{{ url('posisi') }}">
                   <i class="material-icons">assignment</i>
                   <span>Posisi Magang</span>
@@ -104,17 +98,15 @@
                 <div class="input-group input-group-seamless ml-3">
                   <div class="input-group-prepend">
                     <div class="input-group-text">
-                      <i class="fas fa-search"></i>
                     </div>
                   </div>
-                  <input class="navbar-search form-control" type="text" placeholder="Search for something..." aria-label="Search"> </div>
+                </div>
               </form>
               <ul class="navbar-nav border-left flex-row ">
                 <li class="nav-item border-right dropdown notifications">
                   <a class="nav-link nav-link-icon text-center" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <div class="nav-link-icon__wrapper">
                       <i class="material-icons">account_circle</i>
-                      
                     </div>
                   </a>
                   <div class="dropdown-menu dropdown-menu-small" aria-labelledby="dropdownMenuLink">
@@ -160,25 +152,7 @@
 
           </div>  
           <footer class="main-footer d-flex p-2 px-3 bg-white border-top">
-            <ul class="nav">
-              <li class="nav-item">
-                <a class="nav-link" href="#">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Services</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">About</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Products</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Blog</a>
-              </li>
-            </ul>
-            <span class="copyright ml-auto my-auto mr-2">Copyright © 2018
-              <a href="https://designrevision.com" rel="nofollow">DesignRevision</a>
+            <span class="copyright ml-auto my-auto mr-2">© 2019 All rights reserved. PT. Digdaya Olah Teknologi Indonesia
             </span>
           </footer>
         </main>

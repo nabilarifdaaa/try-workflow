@@ -5,7 +5,7 @@
     <img class="success--img" src="{{asset('frontend/images/success.svg')}}" alt="success" width="195.37" height="205.02">
         <h1 class="success--title font-rubik" style="font-weight: bold;">Terimakasih Telah Mendaftar</h1>
         <h2 class="success--title font-rubik" style="font-size: 28px;">sebagai Calon Magang di DOT</h2>
-        <h4 class="success--subtitle font-rubik">Informasi Selanjutnya akan diinformasikan melalui Chat WA</h4>
+        <h4 class="success--subtitle font-rubik">Informasi Selanjutnya akan diinformasikan melalui Email</h4>
 <a class="btn btn-success btn-lg round success--btn" href="{{url('/')}}" role="button">Home</a>
         <footer>
             <div class="row">

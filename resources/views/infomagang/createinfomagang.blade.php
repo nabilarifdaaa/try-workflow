@@ -16,8 +16,11 @@
                         <label for="title">Informasi</label>
                         <input class="form-control" type="text" value="{{ old('info') }}" name="info" placeholder="Informasi Magang DOT">
                     </div>
-                    <button type="submit" class="btn btn-primary">Create</button>
+                    <button type="submit" class="btn btn-success">Create</button>
                 </form>
+                <a href="{{ url('infomagang') }}">
+                    <button type="submit" class="btn btn-primary" style="margin-top: 10px; padding: 9px 21px 9px 20px">Back</button>
+                </a>
             </div>
         </div>
     </div>

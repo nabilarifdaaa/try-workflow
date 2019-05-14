@@ -97,23 +97,21 @@ class UserController extends Controller
 
     public function store(Request $request) {
         \Log::info('hola');
-        // try{
-
-            $request->validate([
-            'alasan' => 'required|min:10|string',
-            'alasan_posisi' => 'required|min:10|string',
-            'kampus' => 'required|string',
-            'nama' => 'required|min:3|string',
-            'jurusan' => 'required|string',
-            'tgl_awal'      => 'required|before:tgl_akhir',
-            'tgl_akhir'     => 'required|after:tgl_awal',
-            ]);
+        $request->validate([
+        'alasan' => 'required|min:10|string',
+        'alasan_posisi' => 'required|min:10|string',
+        'kampus' => 'required|string',
+        'nama' => 'required|min:3|string',
+        'jurusan' => 'required|string',
+        'tgl_awal'      => 'required|before:tgl_akhir',
+        'tgl_akhir'     => 'required|after:tgl_awal',
+        ]);
 
         $this->getMonthRange();
         $this->total_registered = CalonMagang::where(\DB::raw('MONTH(tgl_akhir)'), '>=', reset($this->range))
             ->where(\DB::raw('MONTH(tgl_akhir)'), '<=', end($this->range))
             ->orWhere(\DB::raw('MONTH(tgl_akhir)'), '>', end($this->range))
-            ->where("status", "Approved")
+            ->where("status", "accepted")
             ->select('id', \DB::raw('DATE_FORMAT(tgl_awal, "%Y-%m") as tgl_awal'), 
                 \DB::raw('DATE_FORMAT(tgl_akhir, "%Y-%m") as tgl_akhir')) 
             ->get();
@@ -145,29 +143,12 @@ class UserController extends Controller
             'user_id' => $calon->id,
             'state' => "Registered"
         ]); 
-        
-
-       //  $newsletter = new CalonMagang();
-       //  $newsletter->email = $request->input('email');
-       // // dd($newsletter->email);
-
-        
-            Mail::send('email.success', ['email' => $request->email], function ($message) use ($calon)
-            {
-                $message->from('revinaaniver@gmail.com', 'Goodness Kayode');
-                $message->to($calon->email);
-            });
-            //return redirect()->back()->with('alert','You have successfully applied for our Newsletter');
        
-        
-        
-        // return redirect()->route('usercalonmagang.sukses');
-        // } catch(\Exception $exception)
-        // {
-        //     dd($exception);
-        // }
-
-
+        Mail::send('email.success', ['email' => $request->email], function ($message) use ($calon)
+        {
+            $message->from('revinaaniver@gmail.com', 'Goodness Kayode');
+            $message->to($calon->email);
+        });
     }
     
 
