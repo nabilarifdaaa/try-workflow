@@ -12,7 +12,7 @@
                 <ul>
                     <li>{{ $posisi->deskripsi}}</li>
                 </ul>
-                <a class="btn btn-success btn-lg round btn--size" href="{{ route('register', $posisi->id) }}" role="button">Register</a>
+                <a class="btn btn-success btn-lg round btn--size" href="{{ route('formregister.user', $posisi->id) }}" role="button">Register</a>
                 <a href="{{ route('user') }}" class="menu--item btn btn-success btn-lg round outline btn--size">Back</a>
             </div>
         </div>

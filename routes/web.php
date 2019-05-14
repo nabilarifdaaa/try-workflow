@@ -10,26 +10,23 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('newsletter',[
-    'uses'=>'EmailController@create',
-    'as'=>'newsletter'
-]);
-Route::post('apply-two',[
-    'uses'=>'EmailController@autoMail',
-    'as'=>'apply-two'
-]);
+// Route::get('/flow4','CalonMagangController@getAll');
+// Route::get('/testing','CalonMagangController@state');
+// Route::put('/condition/{id}/approved', 'CalonMagangController@approved')->name('wms.approved');
 
-Route::get('/flow4','CalonMagangController@getAll');
+
+Auth::routes();
 Route::get('/det/{id}/detail','CalonMagangController@det')->name('wms.detail');
-Route::get('/testing','CalonMagangController@state');
 
 Route::get('/history','HistoryController@index')->name('history');
-
-Route::put('/condition/{id}/approved', 'CalonMagangController@approved')->name('wms.approved');
 
 Route::get('/admin', function () {
     return view('welcome');
 });
+
+Route::get('/registeradmin','RegistrationController@create')->name('registeradmin.create');
+
+Route::post('/registeradmin','RegistrationController@store')->name('registeradmin.store');
 
 Route::post('det/{id}/action', 'CalonMagangController@action')->name('wms.action');
 
@@ -151,7 +148,6 @@ Route::patch('/testimoni/{id}/update', 'TestimoniController@update')->name('test
 Route::delete('/testimoni/{id}/delete', 'TestimoniController@destroy')->name('ktestimoni.delete');
 
 
-Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -161,13 +157,13 @@ Route::get('/', 'UserController@index')->name('user');
 
 Route::get('/position-detail/{id}', 'UserController@detail')->name('position-detail');
 
-Route::get('/register/{id}','UserController@register')->name('register');
+Route::get('/register/{id}','UserController@register')->name('formregister.user');
 
 Route::post('register/create','UserController@store')->name('register.store');
 
 Route::get('usercalonmagang/success', 'UserController@sukses')->name('usercalonmagang.sukses');
 
 
-Auth::routes();
+//Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

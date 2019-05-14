@@ -118,18 +118,14 @@
                     </div>
                   </a>
                   <div class="dropdown-menu dropdown-menu-small" aria-labelledby="dropdownMenuLink">
-                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                      document.getElementById('logout-form').submit();">
+                     <a class="dropdown-item" href="{{ route('registeradmin.create') }}" ">
                       <div class="notification__icon-wrapper">
                         <div class="notification__icon">
                           <i class="material-icons text-primary">add_circle</i>
                         </div>
-                      </div>
+                      </div> 
                       <div class="notification__content">
                         <span class="notification__category" style="font-size: 12px; margin-top: 8px;">{{ __('Register') }}</span>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                          @csrf
-                        </form>
                       </div>
                     </a>
                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
@@ -146,7 +142,6 @@
                         </form>
                       </div>
                     </a>
-                    
                   </div>
                 </li>
                 
