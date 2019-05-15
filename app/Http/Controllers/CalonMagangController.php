@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use WMS\src\Services\Parser;
+use Illuminate\Support\Facades\Mail;
 use WMS\src\Services\StateManager;
 
 class CalonMagangController extends Controller
@@ -38,7 +39,6 @@ class CalonMagangController extends Controller
         return $flow;
     }
 
-
     public function det($id){
        
         $user = DB::table('calon_magangs')
@@ -59,8 +59,6 @@ class CalonMagangController extends Controller
 
         $stateManager = new StateManager($getFlow);
 
-        // $stateDetail = $stateManager->getStateDetail($currentState);
-        // dd($stateDetail);
         $flow = $stateManager->getFlow();
         if ($currentState === "accepted" || $currentState === "rejected" ){
             $stateDetail = "end";
@@ -68,17 +66,14 @@ class CalonMagangController extends Controller
         else{
             $stateDetail = $stateManager->getStateDetail($currentState);
         }
-        // dd($stateDetail);
 
         return view('wms.detail',compact('user','flow','stateDetail','history'));
     }
 
     public function action($id, Request $request)
     {   
-        // dd($request->all());
         $stateManager = new StateManager($request->flow);
         $stateDetail = array_keys($stateManager->getStateDetail($request->state));
-        // dd($stateDetail[0]);
         $nextState = "";
 
         if($request->action === "approve"){
@@ -89,9 +84,7 @@ class CalonMagangController extends Controller
 
         // UPDATE 2 TABEL
         $states = State::where('user_id', $id)->first();
-        // dd($id);
         $userStatus = CalonMagang::where('id', $id)->first();
-
         $data_to_update = [
             'state' => $nextState
         ]; 
@@ -100,8 +93,6 @@ class CalonMagangController extends Controller
         ]; 
         $states->update($data_to_update);
         $userStatus->update($data_to_update_status);
-
-
 
         // CREATE pd tb HISTORY
         $admin=Auth::user()->id;
@@ -112,10 +103,25 @@ class CalonMagangController extends Controller
             'status' => $request->action,
             'id_admin' => $admin
         ]); 
-        // dd($history->id_admin);
+
+        if($request->action === "approve")
+        {
+           Mail::send('email.lolos', ['email' => $userStatus->email], function ($message) use ($userStatus)
+        {
+            $message->from('internship@dot-indonesia.com', 'DOT Internship');
+            $message->to($userStatus->email);
+        }); 
+        }
+        else if($request->action==="reject")
+        {
+            Mail::send('email.reject', ['email' => $userStatus->email], function ($message) use ($userStatus)
+        {
+            $message->from('internship@dot-indonesia.com', 'DOT Internship');
+            $message->to($userStatus->email);
+        }); 
+        }
 
         return redirect()->route('wms.detail', ["id" => $id]);
-        // $someName = $request->someName; 
     }
 
    
@@ -184,25 +190,8 @@ class CalonMagangController extends Controller
             'tgl_akhir'     => 'required|after:tgl_awal',
             ]);
 
-        $calon = CalonMagang::create([
-            'kampus' => $request->kampus,
-            'nama' => $request->nama,
-            'jurusan' => $request->jurusan,
-            'telp' => $request->telp,
-            'email' => $request->email,
-            'id_posisi' =>$request->id_posisi,
-            'instagram' => $request->instagram,
-            'facebook' => $request->facebook,
-            'tgl_awal' => $request->tgl_awal,
-            'cv' =>$request->cv,
-            'portofolio' => $request->portofolio,
-            'tgl_akhir' => $request->tgl_akhir,
-            'alasan' => $request->alasan,
-            'status' => "Registered",
-            'flow' => "flow1",
-            'alasan_posisi' => $request->alasan_posisi,
-            'id_info' => $request->id_info,
-            ]);
+       $request["status"] = "Registered";
+        $calon = CalonMagang::create($request->except("_token"));
         
         $state = DB::table('states')->insert([
             'user_id' => $calon->id,

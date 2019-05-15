@@ -5,7 +5,7 @@
     <h2 class="font-rubik subheading"><span>Register</span></h2>
         <div class="row">
             <div class="col-lg-6">
-                <form action="{{route('register.store')}}" method="POST" >
+                <form action="{{route('register.store')}}" method="POST"  >
                 @csrf
                     <div class="form-row">
                      <input class="form-control" value="{{$posisi->id}}" type="hidden" name="id_posisi" placeholder="Nama" required>

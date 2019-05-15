@@ -31,7 +31,7 @@
             var confirm = window.confirm("Are you sure want to delete this data?");
             if(confirm) {
                 $.ajax({
-                    url: "{{ url('/activity') }}" + "/" + id + "/setFalse",
+                    url: "{{ url('/activity') }}" + "/" + id + "/delete",
                     type: "DELETE",
                     data: {
                         _token: "{{ csrf_token() }}",

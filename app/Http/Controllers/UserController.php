@@ -79,24 +79,23 @@ class UserController extends Controller
         return ($waktu->month >= $tgl_awal->month && $waktu->month <= $tgl_akhir->month);
     }
 
-    public function autoMail(Request $request)
-    {
-        $this->validate($request, [
-            'email'=>'required|distinct'
-        ]);
-        $newsletter = new CalonMagang();
-        $newsletter->email = $request->input('email');
-         if ($newsletter->save())
-        {
-            Mail::to($newsletter->email)->send(new Success($newsletter));
-            return redirect()->back()->with('alert','You have successfully applied for our Newsletter');
-        }else{
-            return redirect()->back()->withErrors($validator);
-        }
-    }
+    // public function autoMail(Request $request)
+    // {
+    //     $this->validate($request, [
+    //         'email'=>'required|distinct'
+    //     ]);
+    //     $newsletter = new CalonMagang();
+    //     $newsletter->email = $request->input('email');
+    //      if ($newsletter->save())
+    //     {
+    //         Mail::to($newsletter->email)->send(new Success($newsletter));
+    //         return redirect()->back()->with('alert','You have successfully applied for our Newsletter');
+    //     }else{
+    //         return redirect()->back()->withErrors($validator);
+    //     }
+    // }
 
     public function store(Request $request) {
-        \Log::info('hola');
         $request->validate([
         'alasan' => 'required|min:10|string',
         'alasan_posisi' => 'required|min:10|string',
@@ -146,9 +145,11 @@ class UserController extends Controller
        
         Mail::send('email.success', ['email' => $request->email], function ($message) use ($calon)
         {
-            $message->from('revinaaniver@gmail.com', 'Goodness Kayode');
+            $message->from('internship@dot-indonesia.com', 'DOT Internship');
             $message->to($calon->email);
         });
+
+        return redirect()->route('usercalonmagang.sukses');
     }
     
 

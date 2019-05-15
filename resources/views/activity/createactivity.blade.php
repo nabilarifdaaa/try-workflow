@@ -14,11 +14,11 @@
                     @csrf
                     <div class="form-group">
                         <label for="title">Title</label>
-                        <input class="form-control" type="text" name="title" placeholder="Nama">
+                        <input class="form-control" required type="text" name="title" placeholder="Nama">
                     </div>
                     <div class="form-group">
                         <label for="title">Gambar</label>
-                        <input class="form-control" type="file" name="gambar" placeholder="Gambar">
+                        <input class="form-control" required type="file" name="gambar" placeholder="Gambar">
                     </div>
                     <button type="submit" class="btn btn-success">Create</button>
                 </form>
