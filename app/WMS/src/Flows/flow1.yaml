@@ -7,16 +7,22 @@ states:
         condition: "reject"
   review_cv:
     transitions:
-      technical_test:
+      interview:
         condition: "approve"
       rejected:
         condition: "reject"
   technical_test:
-      transitions:
-        accepted:
-          condition: "approve"
-        rejected:
-          condition: "reject"
+    transitions:
+      accepted:
+        condition: "approve"
+      rejected:
+        condition: "reject"
+  interview:
+    transitions:
+      accepted:
+        condition: "approve"
+      rejected:
+        condition: "reject"
   accepted:
     end: true
   rejected:
