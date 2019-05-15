@@ -97,54 +97,62 @@ class CalonMagangController extends Controller
         if($request->action === "approve")
         {
            Mail::send('email.lolos', ['email' => $userStatus->email], function ($message) use ($userStatus)
-        {
-            $message->from('internship@dot-indonesia.com', 'DOT Internship');
-            $message->to($userStatus->email);
-        }); 
+            {
+                $message->from('internship@dot-indonesia.com', 'DOT Internship');
+                $message->to($userStatus->email);
+            }); 
         }
         else if($request->action==="reject")
         {
             Mail::send('email.reject', ['email' => $userStatus->email], function ($message) use ($userStatus)
-        {
-            $message->from('internship@dot-indonesia.com', 'DOT Internship');
-            $message->to($userStatus->email);
-        }); 
+            {
+                $message->from('internship@dot-indonesia.com', 'DOT Internship');
+                $message->to($userStatus->email);
+            }); 
         }
 
         return redirect()->route('wms.detail', ["id" => $id]);
     }
 
-   
-    
     public function index(Builder $builder){  
         if (request()->ajax()) {            
-            return DataTables::of(CalonMagang::with("posisi","infomagang"))
-            ->addColumn('action', function ($calonmagang) { 
-                return  
-                '<a href="' . route("calonmagang.detail", ["id" => $calonmagang->id]) . '" class="mb-2 btn btn-sm btn-info mr-1"><i class="material-icons">visibility</i></a> 
-                <a href="' . route("calonmagang.edit", ["id" => $calonmagang->id]) . '" class="mb-2 btn btn-sm btn-warning mr-1"><i class="material-icons">create</i></a>  
-                <button data-id="' . $calonmagang->id .'" onclick="deletedata(this)" class="mb-2 btn btn-sm btn-danger mr-1"><i class="material-icons">delete</i></a> </button>
-                <a href="' . route("wms.detail", ["id" => $calonmagang->id]) . '" class="mb-2 btn btn-sm btn-secondary mr-1"><i class="material-icons">settings</i></a>  
-                 ';
-        })->addColumn('flow', function ($calonmagang) { 
-            $listFlow ="";
-            foreach($this->flow as $key){
-                $listFlow .= '<button class="dropdown-item" data-id="' . $calonmagang->id . '" data-flow="' . $key . '" onclick="setFlow(this)" type="button">' . $key . '</button>';
-            }   
-            return '
-                <div class="btn-group" >
-                    <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        ' .$calonmagang->flow. '
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        ' .$listFlow. '
-                    </div>
-                </div>';
-        })->addColumn('status', function ($calonmagang) { 
-            return  
-            '<p class="badge badge-pill badge-success">'.$calonmagang->status.'</p>';
-        })->rawColumns(['action','flow','status'])->toJson();
-    }
+                return DataTables::of(CalonMagang::with("posisi","infomagang"))
+                ->addColumn('action', function ($calonmagang) { 
+                    return  
+                    '<a href="' . route("calonmagang.detail", ["id" => $calonmagang->id]) . '" class="mb-2 btn btn-sm btn-info mr-1"><i class="material-icons">visibility</i></a> 
+                    <a href="' . route("calonmagang.edit", ["id" => $calonmagang->id]) . '" class="mb-2 btn btn-sm btn-warning mr-1"><i class="material-icons">create</i></a>  
+                    <button data-id="' . $calonmagang->id .'" onclick="deletedata(this)" class="mb-2 btn btn-sm btn-danger mr-1"><i class="material-icons">delete</i></a> </button>
+                    <a href="' . route("wms.detail", ["id" => $calonmagang->id]) . '" class="mb-2 btn btn-sm btn-secondary mr-1"><i class="material-icons">settings</i></a>  
+                    ';
+            })->addColumn('flow', function ($calonmagang) { 
+                $listFlow ="";
+                foreach($this->flow as $key){
+                    $listFlow .= '<button class="dropdown-item" data-id="' . $calonmagang->id . '" data-flow="' . $key . '" onclick="setFlow(this)" type="button">' . $key . '</button>';
+                }   
+                return '
+                    <div class="btn-group" >
+                        <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            ' .$calonmagang->flow. '
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            ' .$listFlow. '
+                        </div>
+                    </div>';
+            })->addColumn('status', function ($calonmagang) {
+                if($calonmagang->status == "accepted"){
+                    return  
+                    '<p class="badge badge-pill badge-success">'.$calonmagang->status.'</p>';
+                } 
+                elseif($calonmagang->status == "rejected"){
+                    return  
+                    '<p class="badge badge-pill badge-danger">'.$calonmagang->status.'</p>';
+                } 
+                else{
+                    return  
+                    '<p class="badge badge-pill badge-secondary">'.$calonmagang->status.'</p>'; 
+                }
+            })->rawColumns(['action','flow','status'])->toJson();
+        }
 
         $html = $builder->columns([
             ['data' => 'id', 'name' => 'id', 'title' => 'Id'],
