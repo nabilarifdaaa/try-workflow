@@ -1,37 +1,19 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-// Route::get('/flow4','CalonMagangController@getAll');
-// Route::get('/testing','CalonMagangController@state');
-// Route::put('/condition/{id}/approved', 'CalonMagangController@approved')->name('wms.approved');
-
-
+// ADMIN
 Auth::routes();
-Route::get('/det/{id}/detail','CalonMagangController@det')->name('wms.detail');
-
-Route::get('/history','HistoryController@index')->name('history');
 
 Route::get('/admin', function () {
     return view('welcome');
 });
 
+Route::get('/home', 'HomeController@index')->name('home');
+
 Route::get('/registeradmin','RegistrationController@create')->name('registeradmin.create');
 
 Route::post('/registeradmin','RegistrationController@store')->name('registeradmin.store');
 
-Route::post('det/{id}/action', 'CalonMagangController@action')->name('wms.action');
-
-
-Route::get('/dashboard', 'HomeController@index')->name('home');
+Route::post('setState/{id}/action', 'CalonMagangController@action')->name('wms.action');
 
 //Info Magang
 
@@ -71,8 +53,6 @@ Route::put('/posisi/{id}/setTrue', 'PosisiController@setTrue')->name('posisi.set
 
 Route::put('/posisi/{id}/setFalse', 'PosisiController@setFalse')->name('posisi.setFalse');
 
-
-
 //Activity
 
 Route::get('activity', 'ActivityController@index')->name('activity');
@@ -103,7 +83,6 @@ Route::patch('/kuota/{id}/update', 'KuotaController@update')->name('kuota.update
 
 Route::delete('/kuota/{id}/delete', 'KuotaController@destroy')->name('kuota.delete');
 
-
 //calonmagang
 
 Route::get('calonmagang', 'CalonMagangController@index')->name('calonmagang');
@@ -116,18 +95,13 @@ Route::patch('/calonmagang/{id}/update', 'CalonMagangController@update')->name('
 
 Route::delete('/calonmagang/{id}/delete', 'CalonMagangController@destroy')->name('calonmagang.delete');
 
-Route::put('/calonmagang/{id}/setFlow1', 'CalonMagangController@setFlow1')->name('calonmagang.setFlow1');
-
-Route::put('/calonmagang/{id}/setFlow2', 'CalonMagangController@setFlow2')->name('calonmagang.setFlow2');
-
-Route::put('/calonmagang/{id}/setFlow3', 'CalonMagangController@setFlow3')->name('calonmagang.setFlow3');
-
-Route::put('/calonmagang/{id}/setFlow4', 'CalonMagangController@setFlow4')->name('calonmagang.setFlow4');
+Route::put('/calonmagang/{id}/setFlow/{flow}', 'CalonMagangController@setFlow')->name('calonmagang.setFlow');
 
 Route::get('/calonmagang/create','CalonMagangController@create')->name('calonmagang.create');
 
 Route::post('/calonmagang/create','CalonMagangController@store')->name('calonmagang.store');
 
+Route::get('/setState/{id}/detail','CalonMagangController@setState')->name('wms.detail');
 
 //Testimoni
 
@@ -145,12 +119,7 @@ Route::get('/testimoni/{id}/detail', 'TestimoniController@detail')->name('testim
 
 Route::patch('/testimoni/{id}/update', 'TestimoniController@update')->name('testimoni.update');
 
-Route::delete('/testimoni/{id}/delete', 'TestimoniController@destroy')->name('ktestimoni.delete');
-
-
-
-Route::get('/home', 'HomeController@index')->name('home');
-
+Route::delete('/testimoni/{id}/delete', 'TestimoniController@destroy')->name('testimoni.delete');
 
 //users calon magang
 Route::get('/', 'UserController@index')->name('user');
@@ -162,8 +131,3 @@ Route::get('/register/{id}','UserController@register')->name('formregister.user'
 Route::post('register/create','UserController@store')->name('register.store');
 
 Route::get('usercalonmagang/success', 'UserController@sukses')->name('usercalonmagang.sukses');
-
-
-//Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');

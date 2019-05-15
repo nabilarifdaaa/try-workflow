@@ -58,13 +58,14 @@
         }
     </script>
     <script type="text/javascript">
-        function setFlow1(element){
+        function setFlow(element){
             var id = $(element).attr("data-id");
+            var flow = $(element).attr("data-flow");
             var confirm = window.confirm("Are you sure want to change this data?");
 
             if(confirm) {
                 $.ajax({
-                    url: "{{ url('/calonmagang')}}"  + "/" + id + "/setFlow1",
+                    url: "{{ url('/calonmagang')}}"  + "/" + id + "/setFlow/" + flow,
                     type: "PUT",
                     data: {
                         _token: "{{ csrf_token() }}",
@@ -80,74 +81,6 @@
             }
         }
     </script>
-    <script type="text/javascript">
-        function setFlow2(element){
-            var id = $(element).attr("data-id");
-            var confirm = window.confirm("Are you sure want to change this data?");
-
-            if(confirm) {
-                $.ajax({
-                    url: "{{ url('/calonmagang')}}"  + "/" + id  + "/setFlow2",
-                    type: "PUT",
-                    data: {
-                        _token: "{{ csrf_token() }}",
-                    },
-                    success: function(result) {
-                        window.location.href= "{{url('/calonmagang')}}";
-                    },
-                    fail: function(error) {
-                        alert("Error");
-                        console.log(error);
-                    } 
-                })
-            }
-        }
-    </script>
-    <script type="text/javascript">
-        function setFlow3(element){
-            var id = $(element).attr("data-id");
-            var confirm = window.confirm("Are you sure want to change this data?");
-
-            if(confirm) {
-                $.ajax({
-                    url: "{{ url('/calonmagang')}}"  + "/" + id  + "/setFlow3",
-                    type: "PUT",
-                    data: {
-                        _token: "{{ csrf_token() }}",
-                    },
-                    success: function(result) {
-                        window.location.href= "{{url('/calonmagang')}}";
-                    },
-                    fail: function(error) {
-                        alert("Error");
-                        console.log(error);
-                    } 
-                })
-            }
-        }
-    </script>
-    <script type="text/javascript">
-        function setFlow4(element){
-            var id = $(element).attr("data-id");
-            var confirm = window.confirm("Are you sure want to change this data?");
-
-            if(confirm) {
-                $.ajax({
-                    url: "{{ url('/calonmagang')}}"  + "/" + id  + "/setFlow4",
-                    type: "PUT",
-                    data: {
-                        _token: "{{ csrf_token() }}",
-                    },
-                    success: function(result) {
-                        window.location.href= "{{url('/calonmagang')}}";
-                    },
-                    fail: function(error) {
-                        alert("Error");
-                        console.log(error);
-                    } 
-                })
-            }
-        }
-    </script>
+    
     {!! $html->scripts  () !!}
 @endpush

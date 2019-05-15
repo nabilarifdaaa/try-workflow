@@ -11,6 +11,19 @@ class Parser {
         );
         return $yaml;
     }
+
+    public function allfile(){
+        $folder = __dir__. "./../Flows/";
+        $file = [];
+
+        $filesInFolder = \File::files($folder);     
+        foreach($filesInFolder as $path) { 
+            $file = pathinfo($path);
+            $name[] = $file['filename'] ;
+        }
+        // dd($name);
+        return $name;
+    }
 }
 
 ?>

@@ -21,25 +21,15 @@ use WMS\src\Services\StateManager;
 
 class CalonMagangController extends Controller
 {
-    protected $userFlow,$userState,$getFlow,$currentState;
+    protected $flow;
 
     public function __construct(){
-    // public function __construct(StateManager $statemanager, $getFlow,$currentState) {
-        // $stateManager = new StateManager();
-        // $userFlow = $stateManager->getFlow($getFlow);
-        // $userState = $stateManager->getStateDetail($currentState,$getFlow);
-        // $det = $stateManager->nextState();
-        // dd($det);
         $this->middleware('auth');
-    }
-
-    public function getAll(){
         $flowClasses = new Parser();
-        $flow = $flowClasses->parseYaml();
-        return $flow;
+        $this->flow = $flowClasses->allfile();
     }
 
-    public function det($id){
+    public function setState($id){
        
         $user = DB::table('calon_magangs')
             ->join('states', 'calon_magangs.id', '=', 'states.user_id')
@@ -137,19 +127,19 @@ class CalonMagangController extends Controller
                 <a href="' . route("wms.detail", ["id" => $calonmagang->id]) . '" class="mb-2 btn btn-sm btn-secondary mr-1"><i class="material-icons">settings</i></a>  
                  ';
         })->addColumn('flow', function ($calonmagang) { 
-                return '
-                    <div class="btn-group" >
-                        <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            ' .$calonmagang->flow. '
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <button class="dropdown-item" data-id="' . $calonmagang->id . '"  onclick="setFlow1(this)" type="button">Flow 1</button>
-                            <button class="dropdown-item" data-id="' . $calonmagang->id . '"  onclick="setFlow2(this)" type="button">Flow 2</button>
-                            <button class="dropdown-item" data-id="' . $calonmagang->id . '"  onclick="setFlow3(this)" type="button">Flow 3</button>
-                            <button class="dropdown-item" data-id="' . $calonmagang->id . '"  onclick="setFlow4(this)" type="button">Flow 4</button>
-                        </div>
-                    </div>';
-            
+            $listFlow ="";
+            foreach($this->flow as $key){
+                $listFlow .= '<button class="dropdown-item" data-id="' . $calonmagang->id . '" data-flow="' . $key . '" onclick="setFlow(this)" type="button">' . $key . '</button>';
+            }   
+            return '
+                <div class="btn-group" >
+                    <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        ' .$calonmagang->flow. '
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        ' .$listFlow. '
+                    </div>
+                </div>';
         })->addColumn('status', function ($calonmagang) { 
             return  
             '<p class="badge badge-pill badge-success">'.$calonmagang->status.'</p>';
@@ -190,7 +180,7 @@ class CalonMagangController extends Controller
             'tgl_akhir'     => 'required|after:tgl_awal',
             ]);
 
-       $request["status"] = "Registered";
+        $request["status"] = "Registered";
         $calon = CalonMagang::create($request->except("_token"));
         
         $state = DB::table('states')->insert([
@@ -201,35 +191,11 @@ class CalonMagangController extends Controller
         // return 
     }
 
-    public function setFlow1($id){
+    public function setFlow($id,$flow){
         $calonmagang = CalonMagang::where('id', $id)->first();
-        $data_to_update = ['flow' => "flow1"];
+        $data_to_update = ['flow' => "$flow"];
         $calonmagang->update($data_to_update);
         dd($data_to_update);
-        return response()->json("calonmagang");
-    }
-
-    public function setFlow2($id){
-        $calonmagang = CalonMagang::where('id', $id)->first();
-        $data_to_update = ['flow' => "flow2"];
-        $calonmagang->update($data_to_update);
-
-        return response()->json("calonmagang");
-    }
-
-    public function setFlow3($id){
-        $calonmagang = CalonMagang::where('id', $id)->first();
-        $data_to_update = ['flow' => "flow3"];
-        $calonmagang->update($data_to_update);
-
-        return response()->json("calonmagang");
-    }
-
-    public function setFlow4($id){
-        $calonmagang = CalonMagang::where('id', $id)->first();
-        $data_to_update = ['flow' => "flow4"];
-        $calonmagang->update($data_to_update);
-
         return response()->json("calonmagang");
     }
 
