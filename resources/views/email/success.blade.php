@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-<p>Hello,</p>
+<p>Hello  {{$nama}},</p>
 <p>
     Selamat anda telah berhasil mendaftar sebagai calon magang di PT DOT Indonesia<br>
     Jadwal test akan segera dihunugi oleh kami. Jika ingin bertanya seputar pendaftaran bisa hubungi kami via whatsapp atau email yang tertera di web magang.

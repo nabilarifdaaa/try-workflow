@@ -83,7 +83,7 @@ class CalonMagangController extends Controller
         ]; 
         $states->update($data_to_update);
         $userStatus->update($data_to_update_status);
-
+        // dd($userStatus->posisi->nama_posisi);
         // CREATE pd tb HISTORY
         $admin=Auth::user()->id;
         //dd($admin);
@@ -96,7 +96,25 @@ class CalonMagangController extends Controller
 
         if($request->action === "approve")
         {
-           Mail::send('email.lolos', ['email' => $userStatus->email], function ($message) use ($userStatus)
+            if($userStatus->status === "accepted") {
+                Mail::send('email.lolosfinal', [
+                    'email' => $userStatus->email,
+                    'nama' => $userStatus->nama,
+                    'posisi' => $userStatus->posisi->nama_posisi,
+                    'tgl_awal' => $userStatus->tgl_awal,
+                    'tgl_akhir' => $userStatus->tgl_akhir,
+                    'status' => $userStatus->status,
+                ], function ($message) use ($userStatus)
+                {
+                    $message->from('internship@dot-indonesia.com', 'DOT Internship' );
+                    $message->to($userStatus->email);
+                }); 
+            }
+            Mail::send('email.lolos', [
+            'email' => $userStatus->email,
+            'nama' => $userStatus->nama,
+            'status' => $userStatus->status,
+            ], function ($message) use ($userStatus)
             {
                 $message->from('internship@dot-indonesia.com', 'DOT Internship');
                 $message->to($userStatus->email);
@@ -104,7 +122,7 @@ class CalonMagangController extends Controller
         }
         else if($request->action==="reject")
         {
-            Mail::send('email.reject', ['email' => $userStatus->email], function ($message) use ($userStatus)
+            Mail::send('email.reject', ['email' => $userStatus->email,'nama' => $userStatus->nama], function ($message) use ($userStatus)
             {
                 $message->from('internship@dot-indonesia.com', 'DOT Internship');
                 $message->to($userStatus->email);

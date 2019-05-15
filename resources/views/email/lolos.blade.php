@@ -4,16 +4,10 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-<p>Hello,</p>
+<p>Hello {{$nama}},</p>
 <p> 
-Dengan ini kami menginformasikan bahwa Anda diterima sebagai Siswa Magang di PT. Digdaya Olah Teknologi Indonesia (DOT Indonesia).
-
-Kami tunggu kehadirannya di hari pertama magang di kantor Malang PT. Digdaya Olah Teknologi Indonesia di Perumahan Permata Hijau A15 Kelurahan Tlogomas Kecamatan Lowokwaru Kota Malang. 
-Lokasi Google Maps : https://goo.gl/maps/CmMXiAprPPq
-
-Selamat bergabung dengan keluarga kami.
-Mari Berkolaborasi 😁
-
+	Selamat ! Dengan ini kami menginformasikan bahwa Anda lolos seleksi dan akan melakukan seleksi tahap selanjutnya yaitu seleksi tahap {{ $status }}. 
+	Untuk jadwal seleksi akan dihubungi oleh manager magang via whatsapp.
 </p>
 <p>
     Misbakhul Mustofin
