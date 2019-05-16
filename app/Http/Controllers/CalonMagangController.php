@@ -210,7 +210,15 @@ class CalonMagangController extends Controller
         return response()->json("calonmagang");
     }
 
-     public function restartFlow($id){
+    public function listFlow(){
+        $flowClasses = new Parser();
+        $all = $flowClasses->parseAll($this->flow);
+        $flowName = $this->flow;
+        // dd($flowName);
+        return view('wms.listflow',compact('all','flowName'));
+    }
+    
+    public function restartFlow($id){
         $calonmagang = CalonMagang::where('id', $id)->first();
         $history = History::where('user_id', $id)->first();
         $state = State::where('user_id', $id)->first();

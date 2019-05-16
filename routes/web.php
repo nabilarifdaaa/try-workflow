@@ -13,7 +13,30 @@ Route::get('/registeradmin','RegistrationController@create')->name('registeradmi
 
 Route::post('/registeradmin','RegistrationController@store')->name('registeradmin.store');
 
+//calonmagang
+
+
+Route::get('calonmagang', 'CalonMagangController@index')->name('calonmagang');
+
+Route::get('/calonmagang/{id}/detail', 'CalonMagangController@detail')->name('calonmagang.detail');
+
+Route::get('/calonmagang/{id}/edit', 'CalonMagangController@edit')->name('calonmagang.edit');
+
+Route::patch('/calonmagang/{id}/update', 'CalonMagangController@update')->name('calonmagang.update');
+
+Route::delete('/calonmagang/{id}/delete', 'CalonMagangController@destroy')->name('calonmagang.delete');
+
+Route::put('/calonmagang/{id}/setFlow/{flow}', 'CalonMagangController@setFlow')->name('calonmagang.setFlow');
+
+Route::get('/calonmagang/create','CalonMagangController@create')->name('calonmagang.create');
+
+Route::post('/calonmagang/create','CalonMagangController@store')->name('calonmagang.store');
+
+Route::get('/setState/{id}/detail','CalonMagangController@setState')->name('wms.detail');
+
 Route::post('setState/{id}/action', 'CalonMagangController@action')->name('wms.action');
+
+Route::get('/listFlow', 'CalonMagangController@listFlow')->name('wms.listFlow');
 
 //Info Magang
 
@@ -83,25 +106,6 @@ Route::patch('/kuota/{id}/update', 'KuotaController@update')->name('kuota.update
 
 Route::delete('/kuota/{id}/delete', 'KuotaController@destroy')->name('kuota.delete');
 
-//calonmagang
-
-Route::get('calonmagang', 'CalonMagangController@index')->name('calonmagang');
-
-Route::get('/calonmagang/{id}/detail', 'CalonMagangController@detail')->name('calonmagang.detail');
-
-Route::get('/calonmagang/{id}/edit', 'CalonMagangController@edit')->name('calonmagang.edit');
-
-Route::patch('/calonmagang/{id}/update', 'CalonMagangController@update')->name('calonmagang.update');
-
-Route::delete('/calonmagang/{id}/delete', 'CalonMagangController@destroy')->name('calonmagang.delete');
-
-Route::put('/calonmagang/{id}/setFlow/{flow}', 'CalonMagangController@setFlow')->name('calonmagang.setFlow');
-
-Route::get('/calonmagang/create','CalonMagangController@create')->name('calonmagang.create');
-
-Route::post('/calonmagang/create','CalonMagangController@store')->name('calonmagang.store');
-
-Route::get('/setState/{id}/detail','CalonMagangController@setState')->name('wms.detail');
 
 //Testimoni
 

@@ -16,10 +16,4 @@ class CalonMagang extends Model
     	return $this->hasOne(InfoMagang::class, "id", "id_info");
     }
 
-    
-
-    // public function State(){
-    // 	return $this->hasOne(State::class, "id","user_id");
-    // }
-
 }

@@ -17,28 +17,10 @@ class StateManager extends Parser {
         return $this->flow;
     }
 
-    public function setUserId($id){
-    
-    }
-
     public function getStateDetail($state){
         return $this->flow['states'][$state]['transitions'];
     }
 
-    public function nextState(){
-        // $stateDetail = $this->flow['states'][$state];
-        // foreach($stateDetail as $key=>$value) {
-        //     foreach($value as $key1=>$value2){
-        //         foreach($value2 as $key2=>$value3){
-        //             $condition = $value3;
-        //         }
-        //     }
-        // }
-        // return $condition;
-    }
-
-    public function setState(){
-        
-    }
+    
 }
 ?>

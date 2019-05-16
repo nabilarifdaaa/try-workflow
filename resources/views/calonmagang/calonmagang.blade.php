@@ -17,7 +17,7 @@
         </div>
         <div class="col-lg-6">
             <div align="right">
-                <a href={{url('/calonmagang/create')}} class="btn btn-dark"><i class="material-icons">list</i>&nbsp; List Flow</a><br><br>
+                <a href={{url('/listFlow')}} class="btn btn-dark"><i class="material-icons">list</i>&nbsp; Description List Flow</a><br><br>
             </div>
         </div>
         <div class="col">
