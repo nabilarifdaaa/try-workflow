@@ -2,9 +2,18 @@
 
 @section('content')
     <div class="page-header row no-gutters py-4">
-        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
-            <span class="text-uppercase page-subtitle">Flow</span>
-            <h3 class="page-title">Setting State</h3>
+        <div class="col-lg-6 text-center text-sm-left mb-0">
+            <div align="left">
+                <span class="text-uppercase page-subtitle">Flow</span>
+                <h3 class="page-title">Setting State</h3>
+            </div>
+        </div>
+        <div class="col-lg-6  text-center text-sm-left mb-0">
+            <div align="right">
+                <button data-id="{{ $user->id }}" onclick="restartFlow(this)" class="mb-2 btn btn-sm btn-danger mr-1">
+                <i class="material-icons">update</i> Reset Flow
+                </button>
+            </div>
         </div>
     </div>
     <div class="row">
@@ -138,19 +147,19 @@
 
 @push("scripts")
     <script type="text/javascript">
-        function approved(element){
+        function restartFlow(element){
             var id = $(element).attr("data-id");
-            var confirm = window.confirm("Are you sure approved this state?");
+            var confirm = window.confirm("Are you sure want to restart flow?");
 
             if(confirm) {
                 $.ajax({  
-                    url: "{{ url('/condition') }}" + "/" + id + "/approved",
-                    type: "PUT",
+                    url: "{{ url('/calonmagang') }}" + "/" + id + "/restartFlow",
+                    type: "DELETE",
                     data: {
                         _token: "{{ csrf_token() }}",
                     },
                     success: function(result) {
-                        window.location.href= "{{url('/wms.detail')}}";
+                        window.location.href= "{{url('/calonmagang')}}";
                     },
                     fail: function(error) {
                         alert("Error");
