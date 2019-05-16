@@ -31,28 +31,28 @@ class CalonMagangController extends Controller
 
     public function index(Builder $builder){  
         if (request()->ajax()) {            
-                return DataTables::of(CalonMagang::with("posisi","infomagang"))
-                ->addColumn('action', function ($calonmagang) { 
-                    if($calonmagang->flow === NULL){
-                        return  
-                        '<a href="' . route("calonmagang.detail", ["id" => $calonmagang->id]) . '" class="mb-2 btn btn-sm btn-info mr-1"><i class="material-icons">visibility</i></a> 
-                        <a href="' . route("calonmagang.edit", ["id" => $calonmagang->id]) . '" class="mb-2 btn btn-sm btn-warning mr-1"><i class="material-icons">create</i></a>  
-                        <button data-id="' . $calonmagang->id .'" onclick="deletedata(this)" class="mb-2 btn btn-sm btn-danger mr-1"><i class="material-icons">delete</i></a> </button>';
-                    }
-                    else{
-                        return  
-                        '<a href="' . route("calonmagang.detail", ["id" => $calonmagang->id]) . '" class="mb-2 btn btn-sm btn-info mr-1"><i class="material-icons">visibility</i></a> 
-                        <a href="' . route("calonmagang.edit", ["id" => $calonmagang->id]) . '" class="mb-2 btn btn-sm btn-warning mr-1"><i class="material-icons">create</i></a>  
-                        <button data-id="' . $calonmagang->id .'" onclick="deletedata(this)" class="mb-2 btn btn-sm btn-danger mr-1"><i class="material-icons">delete</i></a> </button>
-                        <a href="' . route("wms.detail", ["id" => $calonmagang->id]) . '" class="mb-2 btn btn-sm btn-secondary mr-1"><i class="material-icons">settings</i></a>  
-                        ';
-                    }
+            return DataTables::of(CalonMagang::with("posisi","infomagang"))
+            ->addColumn('action', function ($calonmagang) { 
+                if($calonmagang->flow === NULL){
+                    return  
+                    '<a href="' . route("calonmagang.detail", ["id" => $calonmagang->id]) . '" class="mb-2 btn btn-sm btn-info mr-1"><i class="material-icons">visibility</i></a> 
+                    <a href="' . route("calonmagang.edit", ["id" => $calonmagang->id]) . '" class="mb-2 btn btn-sm btn-warning mr-1"><i class="material-icons">create</i></a>  
+                    <button data-id="' . $calonmagang->id .'" onclick="deletedata(this)" class="mb-2 btn btn-sm btn-danger mr-1"><i class="material-icons">delete</i></a> </button>';
+                }
+                else{
+                    return  
+                    '<a href="' . route("calonmagang.detail", ["id" => $calonmagang->id]) . '" class="mb-2 btn btn-sm btn-info mr-1"><i class="material-icons">visibility</i></a> 
+                    <a href="' . route("calonmagang.edit", ["id" => $calonmagang->id]) . '" class="mb-2 btn btn-sm btn-warning mr-1"><i class="material-icons">create</i></a>  
+                    <button data-id="' . $calonmagang->id .'" onclick="deletedata(this)" class="mb-2 btn btn-sm btn-danger mr-1"><i class="material-icons">delete</i></a> </button>
+                    <a href="' . route("wms.detail", ["id" => $calonmagang->id]) . '" class="mb-2 btn btn-sm btn-secondary mr-1"><i class="material-icons">settings</i></a>  
+                    ';
+                }
             })->addColumn('flow', function ($calonmagang) { 
                 $listFlow ="";
                 foreach($this->flow as $key){
                     $listFlow .= '<button class="dropdown-item" data-id="' . $calonmagang->id . '" data-flow="' . $key . '" onclick="setFlow(this)" type="button">' . $key . '</button>';
                 }
-                if($calonmagang->status === "Registered"){
+                if($calonmagang->status === "registered"){
                     return '
                         <div class="btn-group" >
                             <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -114,7 +114,7 @@ class CalonMagangController extends Controller
             ->select('histories.passed_state','histories.status','users.name','histories.created_at')
             ->where('histories.user_id','=',$id)
             ->get();
-            // dd($history);
+            // dd($user->flow);
         $getFlow = $user->flow;
         $currentState = $user->state;
 
@@ -154,7 +154,6 @@ class CalonMagangController extends Controller
         ]; 
         $states->update($data_to_update);
         $userStatus->update($data_to_update_status);
-        // dd($userStatus->posisi->nama_posisi);
         // CREATE pd tb HISTORY
         $admin=Auth::user()->id;
         //dd($admin);
@@ -178,7 +177,7 @@ class CalonMagangController extends Controller
                 ], function ($message) use ($userStatus)
                 {
                     $message->from('internship@dot-indonesia.com', 'DOT Internship' );
-                    $message->to($userStatus->email);
+                    $message->to($userStatus->email)->subject('Informasi Seleksi Penerimaan Magang DOT');
                 }); 
             }
             Mail::send('email.lolos', [
@@ -188,7 +187,7 @@ class CalonMagangController extends Controller
             ], function ($message) use ($userStatus)
             {
                 $message->from('internship@dot-indonesia.com', 'DOT Internship');
-                $message->to($userStatus->email);
+                $message->to($userStatus->email)->subject('Informasi Seleksi Penerimaan Magang DOT');
             }); 
         }
         else if($request->action==="reject")
@@ -196,7 +195,7 @@ class CalonMagangController extends Controller
             Mail::send('email.reject', ['email' => $userStatus->email,'nama' => $userStatus->nama], function ($message) use ($userStatus)
             {
                 $message->from('internship@dot-indonesia.com', 'DOT Internship');
-                $message->to($userStatus->email);
+                $message->to($userStatus->email)->subject('Informasi Seleksi Penerimaan Magang DOT');
             }); 
         }
 
@@ -208,6 +207,19 @@ class CalonMagangController extends Controller
         $data_to_update = ['flow' => "$flow"];
         $calonmagang->update($data_to_update);
         dd($data_to_update);
+        return response()->json("calonmagang");
+    }
+
+     public function restartFlow($id){
+        $calonmagang = CalonMagang::where('id', $id)->first();
+        $history = History::where('user_id', $id)->first();
+        $state = State::where('user_id', $id)->first();
+        
+        $calonmagang->update(['flow'=>NULL,
+                            'status'=>'registered']);
+        $history->delete();
+        $state->update(['state'=>'registered']);
+        
         return response()->json("calonmagang");
     }
     
@@ -231,7 +243,7 @@ class CalonMagangController extends Controller
             'tgl_akhir'     => 'required|after:tgl_awal',
             ]);
 
-        $request["status"] = "Registered";
+        $request["status"] = "registered";
         $calon = CalonMagang::create($request->except("_token"));
         
         $state = DB::table('states')->insert([

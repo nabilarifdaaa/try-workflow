@@ -111,7 +111,6 @@ class UserController extends Controller
             });
             if($this->quota->count()>=1){
                 $this->quota = implode(",", $this->quota->toArray());
-                // return response()->json("Kuota bulan " . $this->quota. "telah penuh, silahkan pilih bulan lain.");    
                 return response()
                 ->json([
                     'message' => "Kuota bulan " . $this->quota. " telah penuh, silahkan pilih bulan lain.",
@@ -120,7 +119,7 @@ class UserController extends Controller
             }
         } 
 
-        $request["status"] = "Registered";
+        $request["status"] = "registered";
         $calon = CalonMagang::create($request->except("_token"));
         State::create([
             'user_id' => $calon->id,
