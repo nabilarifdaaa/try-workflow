@@ -37,7 +37,7 @@
             <div class="input-group input-group-seamless ml-3">
               <div class="input-group-prepend">
                 <div class="input-group-text">
-                  <i class="fas fa-search"></i>
+                  <i class="material-icons">navigate_before</i>
                 </div>
               </div>
               <input class="navbar-search form-control" type="text" placeholder="Search for something..." aria-label="Search"> </div>
@@ -98,6 +98,9 @@
                 <div class="input-group input-group-seamless ml-3">
                   <div class="input-group-prepend">
                     <div class="input-group-text">
+                        <a href="{{ url()->previous() }}">
+                        <i class="material-icons text-secondary" style="font-size: 20px;">navigate_before</i>
+                        </a>
                     </div>
                   </div>
                 </div>

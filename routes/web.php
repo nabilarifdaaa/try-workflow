@@ -38,6 +38,8 @@ Route::post('setState/{id}/action', 'CalonMagangController@action')->name('wms.a
 
 Route::get('/listFlow', 'CalonMagangController@listFlow')->name('wms.listFlow');
 
+Route::delete('/calonmagang/{id}/restartFlow', 'CalonMagangController@restartFlow')->name('calonmagang.restartFlow');
+
 //Info Magang
 
 Route::get('infomagang', 'InfoMagangController@index')->name('infomagang');

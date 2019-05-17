@@ -349,6 +349,13 @@ footer p {
 	margin-bottom: 20px;
 	margin-top: 30px;
 }
+.success--subtitle-info {
+	text-align: center;
+	font-size: 18px;
+	color: #5B6770;
+	font-weight: bold;
+	margin-bottom: 30px;
+}
 .success--img {
 	margin: 50px auto 45px auto;
 	display: block;

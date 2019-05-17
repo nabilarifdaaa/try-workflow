@@ -8,6 +8,9 @@
                 <h3 class="page-title">Setting State</h3>
             </div>
         </div>
+        @if ($user->state === "registered")
+            
+        @else
         <div class="col-lg-6  text-center text-sm-left mb-0">
             <div align="right">
                 <button data-id="{{ $user->id }}" onclick="restartFlow(this)" class="mb-2 btn btn-sm btn-danger mr-1">
@@ -15,6 +18,7 @@
                 </button>
             </div>
         </div>
+        @endif
     </div>
     <div class="row">
         <div class="col-lg-3 col-md-12">
@@ -75,7 +79,7 @@
                                     <strong class="mr-1">Current State:</strong> 
                                     <p  class="card-post__category badge badge-pill badge-success">{{$user->state}}</p>
                                     @if ($user->state === "accepted" || $user->state === "rejected" )
-                                        <div class="btn-group btn-group-sm" style="margin-left: 60px;">
+                                    <div class="btn-group btn-group-sm" style="margin-left: 60px;">
                                     @else
                                         <form action="{{route("wms.action", ["id" => $user->id])}}" method="post" onsubmit="return confirm('Are you sure approved this state?');">
                                             {{ csrf_field() }}
@@ -94,7 +98,7 @@
                                             </button>
                                         </form>
                                     @endif
-                                        </div>
+                                    </div>
                             </div>
                         </span>
                     </li>
@@ -142,7 +146,7 @@
                 </a>
             </div>
         </div>
-    </div>   
+      
 @endsection
 
 @push("scripts")

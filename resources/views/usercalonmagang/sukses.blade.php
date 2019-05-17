@@ -6,6 +6,7 @@
         <h1 class="success--title font-rubik" style="font-weight: bold;">Terimakasih Telah Mendaftar</h1>
         <h2 class="success--title font-rubik" style="font-size: 28px;">sebagai Calon Magang di DOT</h2>
         <h4 class="success--subtitle font-rubik">Informasi Selanjutnya akan diinformasikan melalui Email</h4>
+        <h5 class="success--subtitle-info font-rubik">Jika tidak menerima email, silahkan hubungi contact person kami</h5>
 <a class="btn btn-success btn-lg round success--btn" href="{{url('/')}}" role="button">Home</a>
         <footer>
             <div class="row">
