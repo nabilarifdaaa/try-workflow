@@ -21,6 +21,12 @@ class StateManager extends Parser {
         return $this->flow['states'][$state]['transitions'];
     }
 
-    
+    public function getActions($state){
+        return $this->flow['states'][$state]['actions'];
+    }
+
+    public function getValueActions($state,$value){
+        return $this->flow['states'][$state]['actions'][$value]['transition'];
+    }
 }
 ?>

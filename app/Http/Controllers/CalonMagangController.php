@@ -119,38 +119,31 @@ class CalonMagangController extends Controller
         $currentState = $user->state;
 
         $stateManager = new StateManager($getFlow);
-
+        // dd($stateManager);
         $flow = $stateManager->getFlow();
+        
         if ($currentState === "accepted" || $currentState === "rejected" ){
-            $stateDetail = "end";
+            
         }
         else{
-            $stateDetail = $stateManager->getStateDetail($currentState);
+            $nameButtons = $stateManager->getActions($currentState);
         }
-
-        return view('wms.detail',compact('user','flow','stateDetail','history'));
+        return view('wms.detail',compact('user','flow','stateDetail','history','nameButtons'));
     }
 
     public function action($id, Request $request)
     {   
+        // dd($request->all());
         $stateManager = new StateManager($request->flow);
-        $stateDetail = array_keys($stateManager->getStateDetail($request->state));
-        $nextState = "";
-
-        if($request->action === "approve"){
-            $nextState = $stateDetail[0];
-        }elseif($request->action === "reject"){
-            $nextState = $stateDetail[1];
-        }
-
-        // UPDATE 2 TABEL
+        $valueButtons = $stateManager->getValueActions($request->state,$request->action);
+        // return $valueButtons;
         $states = State::where('user_id', $id)->first();
         $userStatus = CalonMagang::where('id', $id)->first();
         $data_to_update = [
-            'state' => $nextState
+            'state' => $valueButtons
         ]; 
         $data_to_update_status = [
-            'status' => $nextState
+            'status' => $valueButtons
         ]; 
         $states->update($data_to_update);
         $userStatus->update($data_to_update_status);
@@ -159,38 +152,26 @@ class CalonMagangController extends Controller
         //dd($admin);
         $history = History::create([
             'user_id' => $id,
-            'passed_state' => $nextState,
+            'passed_state' => $request->state,
             'status' => $request->action,
             'id_admin' => $admin
         ]); 
 
-        if($request->action === "approve")
-        {
-            if($userStatus->status === "accepted") {
-                Mail::send('email.lolosfinal', [
-                    'email' => $userStatus->email,
-                    'nama' => $userStatus->nama,
-                    'posisi' => $userStatus->posisi->nama_posisi,
-                    'tgl_awal' => $userStatus->tgl_awal,
-                    'tgl_akhir' => $userStatus->tgl_akhir,
-                    'status' => $userStatus->status,
-                ], function ($message) use ($userStatus)
-                {
-                    $message->from('internship@dot-indonesia.com', 'DOT Internship' );
-                    $message->to($userStatus->email)->subject('Informasi Seleksi Penerimaan Magang DOT');
-                }); 
-            }
-            Mail::send('email.lolos', [
-            'email' => $userStatus->email,
-            'nama' => $userStatus->nama,
-            'status' => $userStatus->status,
+        if($userStatus->status === "accepted") {
+            Mail::send('email.lolosfinal', [
+                'email' => $userStatus->email,
+                'nama' => $userStatus->nama,
+                'posisi' => $userStatus->posisi->nama_posisi,
+                'tgl_awal' => $userStatus->tgl_awal,
+                'tgl_akhir' => $userStatus->tgl_akhir,
+                'status' => $userStatus->status,
             ], function ($message) use ($userStatus)
             {
-                $message->from('internship@dot-indonesia.com', 'DOT Internship');
+                $message->from('internship@dot-indonesia.com', 'DOT Internship' );
                 $message->to($userStatus->email)->subject('Informasi Seleksi Penerimaan Magang DOT');
             }); 
         }
-        else if($request->action==="reject")
+        else if($userStatus->status === "rejected")
         {
             Mail::send('email.reject', ['email' => $userStatus->email,'nama' => $userStatus->nama], function ($message) use ($userStatus)
             {
@@ -198,7 +179,18 @@ class CalonMagangController extends Controller
                 $message->to($userStatus->email)->subject('Informasi Seleksi Penerimaan Magang DOT');
             }); 
         }
-
+        else{
+            Mail::send('email.lolos', [
+                'email' => $userStatus->email,
+                'nama' => $userStatus->nama,
+                'status' => $userStatus->status,
+                ], function ($message) use ($userStatus)
+                {
+                    $message->from('internship@dot-indonesia.com', 'DOT Internship');
+                    $message->to($userStatus->email)->subject('Informasi Seleksi Penerimaan Magang DOT');
+                }
+            ); 
+        }
         return redirect()->route('wms.detail', ["id" => $id]);
     }
 
@@ -220,13 +212,14 @@ class CalonMagangController extends Controller
     
     public function restartFlow($id){
         $calonmagang = CalonMagang::where('id', $id)->first();
-        $history = History::where('user_id', $id)->first();
         $state = State::where('user_id', $id)->first();
         
         $calonmagang->update(['flow'=>NULL,
-                            'status'=>'registered']);
-        $history->delete();
+        'status'=>'registered']);
         $state->update(['state'=>'registered']);
+        $history = DB::table('histories')
+                    ->where('user_id', $id)
+                    ->delete();
         
         return response()->json("calonmagang");
     }

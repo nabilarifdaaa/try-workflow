@@ -9,14 +9,6 @@ states:
         transition: rejected
   review_cv:
     actions:
-      Wawancara:
-        transition: interview
-      Terima:
-        transition: accepted
-      Tolak:
-        transition: rejected
-  interview:
-    actions:
       Tes Teknis:
         transition: technical_test
       Terima:
@@ -25,11 +17,18 @@ states:
         transition: rejected
   technical_test:
     actions:
+      Wawancara:
+        transition: interview
       Terima:
         transition: accepted
       Tolak:
         transition: rejected
-  
+  interview:
+    actions:
+      Terima:
+        transition: accepted
+      Tolak:
+        transition: rejected
   accepted:
     actions : end
   rejected: 

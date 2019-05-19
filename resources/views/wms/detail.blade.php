@@ -86,16 +86,13 @@
                                             <input name="id" value="{{$user->id}}" type="hidden">
                                             <input name="flow" value="{{$user->flow}}" type="hidden">
                                             <input name="state" value="{{$user->state}}" type="hidden">
-                                            <button type="submit" class="btn btn-white" name="action" value="approve">
+                                            @foreach ($nameButtons as $key=>$value)    
+                                            <button type="submit" class="btn btn-white" name="action" value="{{$key}}">
                                                 <span class="text-success">
                                                     <i class="material-icons">check</i>
-                                                </span> Approve 
+                                                </span> {{$key}}
                                             </button>
-                                            <button type="submit" class="btn btn-white" name="action" value="reject">
-                                                <span class="text-danger">
-                                                    <i class="material-icons">clear</i>
-                                                </span> Reject 
-                                            </button>
+                                            @endforeach
                                         </form>
                                     @endif
                                     </div>
@@ -158,7 +155,7 @@
             if(confirm) {
                 $.ajax({  
                     url: "{{ url('/calonmagang') }}" + "/" + id + "/restartFlow",
-                    type: "DELETE",
+                    type: "PUT",
                     data: {
                         _token: "{{ csrf_token() }}",
                     },
