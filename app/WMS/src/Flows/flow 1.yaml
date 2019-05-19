@@ -1,0 +1,36 @@
+states:
+  registered:
+    actions:
+      Review CV:
+        transition: review_cv
+      Terima:
+        transition: accepted
+      Tolak:
+        transition: rejected
+  review_cv:
+    actions:
+      Wawancara:
+        transition: interview
+      Terima:
+        transition: accepted
+      Tolak:
+        transition: rejected
+  interview:
+    actions:
+      Tes Teknis:
+        transition: technical_test
+      Terima:
+        transition: accepted
+      Tolak:
+        transition: rejected
+  technical_test:
+    actions:
+      Terima:
+        transition: accepted
+      Tolak:
+        transition: rejected
+  
+  accepted:
+    actions : end
+  rejected: 
+    actions : end

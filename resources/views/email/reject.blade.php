@@ -6,7 +6,7 @@
 <body>
 <p>Hello,</p>
 <p>
-   Terima kasih telah mendaftarkan diri anda untuk menjadi calon magang Data Engineer di PT. DOT Indonesia. Kami mau memberitahukan untuk kelanjutan dari hasil review test. Mohon maaf anda masih belum diterima untuk magang di PT. DOT Indonesia. Jangan berkecil hati, karena tidak lolos bukan berarti tidak bagus, jangan jadikan ini sebagai beban tapi jadikan motivasi untuk menjadi lebih baik kedepannya. Thank you for your participation, keep fighting.
+   Terima kasih telah mendaftarkan diri anda menjadi calon magang di PT. DOT Indonesia. Kami ingin memberitahukan tentang kelanjutan dari hasil review test. Mohon maaf anda masih belum diterima untuk magang di PT. DOT Indonesia. Jangan berkecil hati, karena tidak lolos bukan berarti tidak bagus, jangan jadikan ini sebagai beban tapi jadikan motivasi untuk menjadi lebih baik kedepannya. Thank you for your participation, keep fighting.
 </p>
 <p>
     Misbakhul Mustofin

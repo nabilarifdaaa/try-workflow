@@ -1,0 +1,19 @@
+states:
+  registered:
+    actions: 
+      Review CV:
+        transition: review_cv
+      Terima:
+        transition: accepted
+      Tolak:
+        transition: rejected
+  review_cv:
+    actions:
+      Terima:
+        transition: accepted
+      Tolak:
+        transition: rejected
+  accepted:
+    actions: end
+  rejected:
+    actions: end
